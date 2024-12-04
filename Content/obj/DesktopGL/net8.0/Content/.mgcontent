@@ -4,8 +4,8 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/gun.png</File>
-    <File>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/unit.png</File>
+    <File>/home/noah/Projects/Game/UnamedGame/Content/gun.png</File>
+    <File>/home/noah/Projects/Game/UnamedGame/Content/unit.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
