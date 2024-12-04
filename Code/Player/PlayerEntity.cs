@@ -62,6 +62,7 @@ public class PlayerEntity : RectangleEntity
         var mousepos = UnamedGame.Instance.camera.ScreenToWorld(new Vector2(input.MouseState.X, input.MouseState.Y));
         var direction = mousepos - Position;
         var rotation = (float)Math.Atan2(direction.Y, 1/direction.X);
+        
         spriteBatch.Draw(guntexture, Position , new Rectangle(0,0, 24, 48), Color.White, rotation, new Vector2(Texture.Width/2, Texture.Height/2), 1.0f, SpriteEffects.None, 0.0f);
         spriteBatch.Draw(Texture, Position, null, Color.White, rotation, new Vector2(Texture.Width/2, Texture.Height/2), 1.0f, SpriteEffects.None, 0.0f);
     }
