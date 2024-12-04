@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using UnamedGame.Abstract;
 using UnamedGame.Helpers;
 
-namespace UnamedGame.System
+namespace UnamedGame.GameSystem
 {
 
     public enum CameraMode
@@ -56,7 +56,7 @@ namespace UnamedGame.System
         }
         public Vector2 ScreenToWorld(Vector2 screenPosition)
         {
-            return screenPosition + Position * zoom;
+            return screenPosition / zoom + Position;
         }
         public CameraMode Mode = CameraMode.Free;
         public Entity followEntity;

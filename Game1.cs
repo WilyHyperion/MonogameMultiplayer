@@ -9,7 +9,8 @@ using Microsoft.Xna.Framework.Input;
 using UnamedGame.Abstract;
 using UnamedGame.Helpers;
 using UnamedGame.Player;
-using UnamedGame.System;
+using UnamedGame.GameSystem;
+using UnamedGame.GameSystem.UI;
 
 namespace UnamedGame;
 
@@ -50,6 +51,7 @@ public class UnamedGame : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         player = new PlayerEntity( new Vector2(0, 0));
         entities.Add(player);
+        UIManager.loadElementTextures();
     }
 
     protected override void Update(GameTime gameTime)
@@ -68,6 +70,7 @@ public class UnamedGame : Game
                 entities.RemoveAt(i);
             }
         }
+        UIManager.UpdateElements();
         camera.Update();
         oldState = Keyboard.GetState();
     }
@@ -75,7 +78,6 @@ public class UnamedGame : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
-
         _spriteBatch.Begin(transformMatrix: camera.TransformMatrix);
         foreach (Entity entity in entities)
         {
@@ -85,6 +87,7 @@ public class UnamedGame : Game
         DrawHelpers.DrawRectangleOutline(_spriteBatch, new Rectangle(0, 0, 100, 100), Color.Bisque);
         _spriteBatch.End();
         _spriteBatch.Begin();
+        UIManager.Draw(_spriteBatch);
         base.Draw(gameTime);
         _spriteBatch.End();
     }
