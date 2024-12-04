@@ -56,7 +56,7 @@ namespace UnamedGame.System
         }
         public Vector2 ScreenToWorld(Vector2 screenPosition)
         {
-            return screenPosition + Position;
+            return screenPosition + Position * zoom;
         }
         public CameraMode Mode = CameraMode.Free;
         public Entity followEntity;
