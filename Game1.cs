@@ -11,20 +11,21 @@ using UnamedGame.Helpers;
 using UnamedGame.Player;
 using UnamedGame.GameSystem;
 using UnamedGame.GameSystem.UI;
+using UnamedGame.System.Collision;
+using UnamedGame.Entites;
 
 namespace UnamedGame;
 
 public class UnamedGame : Game
 {
-    
+    public CollisionManager collisionManager = new CollisionManager();
     public Random random = new Random();
     public KeyboardState oldState;
     public List<Entity> entities = new List<Entity>();
     public PlayerEntity player;
     public Camera camera;
     public static UnamedGame Instance;
-    Texture2D unitTexture;
-    Texture2D guntexture;
+
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
@@ -53,18 +54,38 @@ public class UnamedGame : Game
         entities.Add(player);
         UIManager.loadElementTextures();
     }
-
+    public void SpawnEntity(Entity entity)
+    {
+        entities.Add(entity);
+        if(entity is Collidable c)
+        {
+            collisionManager.addCollidable(c);
+        }
+    }
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
+        if( Keyboard.GetState().IsKeyDown(Keys.Space))
+        {
+            SpawnEntity(new StageGeometry(new Vector2(random.Next(0, 100), random.Next(0, 100)), new Vector2(random.Next(0, 100), random.Next(0, 100) ), new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255))));
+        }
         base.Update(gameTime);
         for (int i = 0; i < entities.Count; i++)
         {
             Entity entity = entities[i];
             entity.whoAmi = i;
             entity.Update();
-            entity.Position += entity.Velocity;
+            if(entity is Collidable c) {
+                var collisions = collisionManager.gridSystem.GetCollisions(c.node.bounds);
+                foreach (Node node in collisions)
+                {
+                    c.OnCollision(node.collidable);
+                }
+                c.MoveBy(c.Velocity);
+                c.PostUpdate();
+                c.OldBounds = c.Bounds;
+            }
             if (!entity.Active)
             {
                 entities.RemoveAt(i);

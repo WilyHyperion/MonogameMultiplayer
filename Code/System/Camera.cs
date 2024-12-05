@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UnamedGame.Abstract;
 using UnamedGame.Helpers;
+using UnamedGame.System.Collision;
 
 namespace UnamedGame.GameSystem
 {
@@ -20,6 +21,8 @@ namespace UnamedGame.GameSystem
         public Vector2 Position;
         public bool ZoomLocked = false;
         private float zoom = 0.5f;
+        public float minZoom = 0.1f;
+        public float maxZoom = 2.0f;
         public float Zoom
         {
             get
@@ -28,7 +31,7 @@ namespace UnamedGame.GameSystem
             }
             set
             {
-                zoom = MathHelper.Clamp(value, 0.1f, 2.0f);
+                zoom = MathHelper.Clamp(value, minZoom, maxZoom);
             }
         }
         public Matrix TransformMatrix
@@ -59,14 +62,14 @@ namespace UnamedGame.GameSystem
             return screenPosition / zoom + Position;
         }
         public CameraMode Mode = CameraMode.Free;
-        public Entity followEntity;
+        public Collidable followEntity;
         public Vector2 DragStart = Vector2.Zero;
         private int lastScrollValue = 0;
 
         public void Update()
         {
             MouseState mouseState = Mouse.GetState();
-            if (mouseState.LeftButton == ButtonState.Pressed && Mode == CameraMode.Free)
+            if (mouseState.RightButton == ButtonState.Pressed && Mode == CameraMode.Free)
             {
                 if (DragStart == Vector2.Zero)
                 {
@@ -118,9 +121,9 @@ namespace UnamedGame.GameSystem
 
         }
 
-        public void centerOnEntity(Entity e)
+        public void centerOnEntity(Collidable e)
         {
-            Position = e.Position - new Vector2(width  / 2 * (1/zoom) , height  / 2 * (1/zoom));
+            Position = new Vector2(e.Bounds.X, e.Bounds.Y) - new Vector2(width  / 2 * (1/zoom) , height  / 2 * (1/zoom));
         }
     }
 }

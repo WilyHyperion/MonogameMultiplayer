@@ -1,20 +1,31 @@
-
+#nullable enable
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using UnamedGame.Helpers;
 namespace UnamedGame.System.Collision;
 
 //maybe the real quadtree was the better algorithm we made along the way
-struct Node {
-    public Rectangle bounds;
+public class Node {
+    public Collidable? collidable;
+    public RectangleF bounds;
     public int ID;
-    public Node(Rectangle bounds, int ID){
+    public Node(RectangleF bounds, int ID, Collidable collidable){
+        this.bounds = bounds;
+        this.ID = ID;
+        this.collidable = collidable;
+    }
+    public Node(RectangleF bounds, int ID){
         this.bounds = bounds;
         this.ID = ID;
     }
-    
 }
 
-class GridSystem {
+public class GridSystem {
+    int nextID = 0;
+    public int GetNextID(){
+        return nextID++;
+    }
     //TODO determine this better
     const int GridSize = 32;
     public static Vector2 GetGridPosition(Vector2 position){
@@ -24,7 +35,7 @@ class GridSystem {
     public Dictionary<int, Dictionary<int, List<Node>>> Grid = new Dictionary<int, Dictionary<int, List<Node>>>();
 
     public void AddNode(Node node){
-        Vector2 gridPosition = GetGridPosition(new Vector2(node.bounds.X, node.bounds.Y));
+        Vector2 gridPosition = GetGridPosition(new Vector2(node.bounds.X + node.bounds.Width/2, node.bounds.Y + node.bounds.Height/2));
         if(!Grid.ContainsKey((int)gridPosition.X)){
             Grid[(int)gridPosition.X] = new Dictionary<int, List<Node>>();
         }
@@ -33,7 +44,11 @@ class GridSystem {
         }
         Grid[(int)gridPosition.X][(int)gridPosition.Y].Add(node);
     }
-    public void RemoveNode(Node node){
+    public void RemoveNode(Node? nullnode){
+        if(nullnode == null){
+            return;
+        }
+        Node node = (Node)nullnode;
         Vector2 gridPosition = GetGridPosition(new Vector2(node.bounds.X, node.bounds.Y));
         if(!Grid.ContainsKey((int)gridPosition.X)){
             return;
@@ -54,7 +69,7 @@ class GridSystem {
             }
         }
         return nodes;
-    }    
+    }
     public List<Node> GetNodesIn(Vector2 worldPos){
         Vector2 gridPosition = GetGridPosition(worldPos);
         List<Node> nodes = new List<Node>();
@@ -63,7 +78,7 @@ class GridSystem {
         }
         return nodes;
     }
-    public List<Node> GetCollisions(Rectangle bounds){
+    public List<Node> GetCollisions(RectangleF bounds){
         List<Node> nodes = new List<Node>();
         Vector2 gridPosition = GetGridPosition(new Vector2(bounds.X, bounds.Y));
         for(int x = -1; x < 2; x++){

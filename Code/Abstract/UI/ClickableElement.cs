@@ -1,13 +1,14 @@
 
 namespace UnamedGame.Abstract.UI;
 
+using global::UnamedGame.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 public  interface ClickableElement
 {
-    public Rectangle Bounds { get; set; }
+    public RectangleF Bounds { get; set; }
     public bool Clicked { get; set; }
     public bool CheckClicked(){
         return CheckClicked(new Vector2(Mouse.GetState().X, Mouse.GetState().Y ) );

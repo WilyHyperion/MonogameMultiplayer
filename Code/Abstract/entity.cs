@@ -3,18 +3,26 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 namespace UnamedGame.Abstract
 {
-public abstract class Entity {
-    public int ID;
-    public Vector2 Position;
-    public Vector2 Velocity;
-    public bool Active = true;
-    public int whoAmi;
+    public abstract class Entity
+    {
+        public int ID;
+        public Vector2 Velocity;
+        public bool Active = true;
+        public int whoAmi;
+        public virtual void Update() {
+            
+        }
+        public abstract void Draw(SpriteBatch spriteBatch);
+        public void Destroy()
+        {
+            Active = false;
+        }
+        public virtual void PostUpdate(){
 
-    public abstract Boolean IsColliding(Entity other);
-    public abstract void Update();
-    public abstract void Draw ( SpriteBatch spriteBatch );
-}
+        }
+    }
 
-}
+    }
