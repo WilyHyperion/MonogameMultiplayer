@@ -131,4 +131,8 @@ public class RectangleF {
     public static implicit operator Rectangle(RectangleF r){
         return new Rectangle((int)r.X, (int)r.Y, (int)r.Width, (int)r.Height);
     }
+    public override string ToString()
+    {
+        return $"X: {x}, Y: {y}, Width: {Width}, Height: {Height}";
+    }
 }

@@ -22,10 +22,14 @@ public static class UIManager {
     public static void loadElementTextures(){
         var allElements = typeof(UIElement).Assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(UIElement)));
         foreach (var element in allElements){
-                Console.WriteLine(element.Name);
+            try{
                 var texture = UnamedGame.Instance.Content.Load<Texture2D>("UI/" + element.Name);
                 var method = element.GetMethod("LoadTexture", BindingFlags.Static | BindingFlags.Public |  BindingFlags.FlattenHierarchy, null, new Type[] {typeof(Texture2D)}, null);
                 method.Invoke(null, new object[] {texture});
+            }
+            catch (Exception e){
+                Console.WriteLine("Error loading texture for " + element.Name);
+            }
 
         }
     }

@@ -15,8 +15,14 @@ public abstract class SoildEntity : Collidable
 
     public override void OnCollision(Collidable other)
     {
+        if (other.node.ID == this.node.ID){
+            return;
+        }
         if (ShouldCollide(other) && (other is SoildEntity || other == null))
         {
+            if(this is StageGeometry) {
+                return;
+            }
             if(other != null && other is SoildEntity){
                 SoildEntity otherSoild = (SoildEntity)other;
                 if (otherSoild.strength < this.strength && !(other is StageGeometry))
@@ -27,18 +33,30 @@ public abstract class SoildEntity : Collidable
             //3 cases -either its x should be snapped or the y should be snapped, or it looks like both, so we need to do some math to find out where it would have colided along the step
             //if its the x, then the y value of the last bounds should be inside the rectangle
             //and vice versa
-            if (OldBounds.Right > other.Bounds.Right || OldBounds.Left < other.Bounds.Left)
-            {
-                this.Bounds.Left = other.Bounds.Right;
+            if(OldBounds.Right < other.Bounds.Left){
+                //right
+                Bounds.X = other.Bounds.Left - Bounds.Width;
             }
-            else if (OldBounds.Bottom > other.Bounds.Bottom || OldBounds.Top < other.Bounds.Top)
-            {
-                this.Bounds.Top = other.Bounds.Bottom;
+            else if(OldBounds.Left > other.Bounds.Right){
+                //left
+                Bounds.X = other.Bounds.Right;
             }
-            else
-            {
-                Console.WriteLine("TODO");
+            else if(OldBounds.Bottom < other.Bounds.Top){
+                //bottom
+                Bounds.Y = other.Bounds.Top - Bounds.Height;
             }
+            else if(OldBounds.Top > other.Bounds.Bottom){
+                //top
+                Bounds.Y = other.Bounds.Bottom;
+            }
+            else if (OldBounds.Intersects(other.Bounds)) {
+            }
+            else{
+                Console.WriteLine("No collision");
+            }
+
+            
+
 
         }
     }

@@ -43,21 +43,21 @@ public class UnamedGame : Game
     {
         this.IsFixedTimeStep = true;
         Console.WriteLine("Game Initialized");
-        camera = new Camera(new Vector2(0, 0), GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width , GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
+        camera = new Camera(new Vector2(0, 0), GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        player = new PlayerEntity( new Vector2(0, 0));
+        player = new PlayerEntity(new Vector2(0, 0));
         entities.Add(player);
         UIManager.loadElementTextures();
     }
     public void SpawnEntity(Entity entity)
     {
         entities.Add(entity);
-        if(entity is Collidable c)
+        if (entity is Collidable c)
         {
             collisionManager.addCollidable(c);
         }
@@ -66,9 +66,9 @@ public class UnamedGame : Game
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-        if( Keyboard.GetState().IsKeyDown(Keys.Space))
+        if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
         {
-            SpawnEntity(new StageGeometry(new Vector2(random.Next(0, 100), random.Next(0, 100)), new Vector2(random.Next(0, 100), random.Next(0, 100) ), new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255))));
+            SpawnEntity(new StageGeometry(player.Position + new Vector2(random.Next(0, 100), random.Next(0, 100)), new Vector2(random.Next(0, 100), random.Next(0, 100)), new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255))));
         }
         base.Update(gameTime);
         for (int i = 0; i < entities.Count; i++)
@@ -76,13 +76,19 @@ public class UnamedGame : Game
             Entity entity = entities[i];
             entity.whoAmi = i;
             entity.Update();
-            if(entity is Collidable c) {
-                var collisions = collisionManager.gridSystem.GetCollisions(c.node.bounds);
-                foreach (Node node in collisions)
-                {
-                    c.OnCollision(node.collidable);
-                }
+            if (entity is Collidable c)
+            {
+
                 c.MoveBy(c.Velocity);
+                if (c.ShouldCheckCollisions)
+                {
+                    var collisions = collisionManager.gridSystem.GetCollisions(c.node.bounds);
+                    foreach (Node node in collisions)
+                    {
+                        c.OnCollision(node.collidable);
+                    }
+                }
+
                 c.PostUpdate();
                 c.OldBounds = c.Bounds;
             }

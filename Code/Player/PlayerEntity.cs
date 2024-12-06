@@ -12,7 +12,7 @@ using UnamedGame.Abstract.Entites;
 using UnamedGame.System.Collision;
 namespace UnamedGame.Player;
 
-public class PlayerEntity : Collidable
+public class PlayerEntity : SoildEntity
 {
     public int HP = 100;
     public int maxHP = 100;
@@ -41,6 +41,7 @@ public class PlayerEntity : Collidable
     public float Speed = 2;
     public float Friction = 0.9f;
     PlayerInput input;
+    
     public override void Update()
     {
         input = new PlayerInput();
@@ -79,7 +80,8 @@ public class PlayerEntity : Collidable
         }
     }
     public override void PostUpdate()
-    { Velocity *= Friction;
+    { 
+        Velocity *= Friction;
         if (Velocity.Length() < 0.1)
         {
             Velocity = Vector2.Zero;
@@ -88,14 +90,18 @@ public class PlayerEntity : Collidable
     int animationTick = -1;
     public override void Draw(SpriteBatch spriteBatch)
     {
-
+        Helpers.DrawHelpers.DrawRectangle(spriteBatch, OldBounds, Color.White);
         var mousepos = UnamedGame.Instance.camera.ScreenToWorld(new Vector2(input.MouseState.X, input.MouseState.Y));
         var direction = mousepos - this.Position;
         var rotation = (float)Math.Atan2(direction.Y + 0.0f, direction.X + 0.0f) + MathHelper.ToRadians(90f);
-        spriteBatch.Draw(Texture, Position, null, Color.White, rotation, new Vector2(Texture.Width / 2, Texture.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
+        spriteBatch.Draw(Texture, Position + new Vector2(Bounds.Width /2, Bounds.Height /2) , null, Color.White, rotation, new Vector2(Bounds.Width / 2, Bounds.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
         Vector2 gunOffset = new Vector2(Texture.Width, Texture.Height) * 0.5f;
         gunOffset.Rotate(rotation - MathHelper.ToRadians(90f));
-        spriteBatch.Draw(guntexture, Position + gunOffset, DrawHelpers.sampleAnimationFrame(guntexture, 8, 1, animationTick), Color.White, rotation, new Vector2(Texture.Width / 2, Texture.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
+        spriteBatch.Draw(guntexture, Position + gunOffset + new Vector2(Bounds.Width /2, Bounds.Height /2) , DrawHelpers.sampleAnimationFrame(guntexture, 8, 1, animationTick), Color.White, rotation, new Vector2(Texture.Width / 2, Texture.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
+    }
+    public override bool ShouldCollide(Collidable other)
+    {
+        return true;
     }
 
 }

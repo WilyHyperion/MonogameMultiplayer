@@ -27,7 +27,7 @@ public class GridSystem {
         return nextID++;
     }
     //TODO determine this better
-    const int GridSize = 32;
+    const int GridSize = 32;    
     public static Vector2 GetGridPosition(Vector2 position){
         return new Vector2((int)(position.X / GridSize), (int)(position.Y / GridSize));
     }
@@ -85,7 +85,7 @@ public class GridSystem {
             for(int y = -1; y < 2; y++){
                 if(Grid.ContainsKey((int)gridPosition.X + x) && Grid[(int)gridPosition.X + x].ContainsKey((int)gridPosition.Y + y)){
                     foreach(Node node in Grid[(int)gridPosition.X + x][(int)gridPosition.Y + y]){
-                        if(node.bounds.Intersects(bounds)){
+                        if(node.bounds.Intersects(bounds) && node.collidable != null && node.collidable.Bounds != bounds){
                             nodes.Add(node);
                         }
                     }

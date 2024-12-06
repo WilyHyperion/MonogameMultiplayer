@@ -1,4 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/gun.png","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/gun.xnb","TextureProcessor","Texture2DContent",431,36949,0.1698142
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/UI/HPBar.png","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/UI/HPBar.xnb","TextureProcessor","Texture2DContent",314,96085,0.013209
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/unit.png","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/unit.xnb","TextureProcessor","Texture2DContent",363,9301,0.0045683
+"/home/noah/Projects/Game/UnamedGame/Content/gun.png","/home/noah/Projects/Game/UnamedGame/Content/bin/DesktopGL/Content/gun.xnb","TextureProcessor","Texture2DContent",431,36949,0.0969147
+"/home/noah/Projects/Game/UnamedGame/Content/UI/HPBar.png","/home/noah/Projects/Game/UnamedGame/Content/bin/DesktopGL/Content/UI/HPBar.xnb","TextureProcessor","Texture2DContent",314,96085,0.0104094
+"/home/noah/Projects/Game/UnamedGame/Content/unit.png","/home/noah/Projects/Game/UnamedGame/Content/bin/DesktopGL/Content/unit.xnb","TextureProcessor","Texture2DContent",363,9301,0.0035281
