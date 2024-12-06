@@ -3,11 +3,11 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using UnamedGame.Abstract;
-using UnamedGame.Helpers;
-using UnamedGame.System.Collision;
+using Game.Abstract;
+using Game.Helpers;
+using Game.System.Collision;
 
-namespace UnamedGame.GameSystem
+namespace Game.GameSystem
 {
 
     public enum CameraMode

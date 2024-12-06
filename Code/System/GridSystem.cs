@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using UnamedGame.Helpers;
-namespace UnamedGame.System.Collision;
+using Game.Helpers;
+namespace Game.System.Collision;
 
 //maybe the real quadtree was the better algorithm we made along the way
 public class Node {
@@ -27,7 +27,7 @@ public class GridSystem {
         return nextID++;
     }
     //TODO determine this better
-    const int GridSize = 32;    
+    const int GridSize = 250;
     public static Vector2 GetGridPosition(Vector2 position){
         return new Vector2((int)(position.X / GridSize), (int)(position.Y / GridSize));
     }

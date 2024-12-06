@@ -1,4 +1,4 @@
-namespace UnamedGame.Abstract.Entites;
+namespace Game.Abstract.Entites;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,7 +7,8 @@ using Abstract;
 using System;
 using global::System;
 using Entites;
-using global::UnamedGame.Entites;
+using global::Game.Entites;
+using Game.Helpers;
 
 public abstract class SoildEntity : Collidable
 {
@@ -52,12 +53,7 @@ public abstract class SoildEntity : Collidable
             else if (OldBounds.Intersects(other.Bounds)) {
             }
             else{
-                Console.WriteLine("No collision");
             }
-
-            
-
-
         }
     }
     /// <summary>

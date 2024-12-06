@@ -4,7 +4,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace UnamedGame.Abstract
+namespace Game.Abstract
 {
     public abstract class Entity
     {

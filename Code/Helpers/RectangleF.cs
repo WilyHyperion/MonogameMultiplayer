@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace UnamedGame.Helpers;
+namespace Game.Helpers;
 
 public class RectangleF {
     float x;
@@ -134,5 +134,13 @@ public class RectangleF {
     public override string ToString()
     {
         return $"X: {x}, Y: {y}, Width: {Width}, Height: {Height}";
+    }
+    public override bool Equals(object obj)
+    {
+        if(obj is RectangleF ){
+            RectangleF r = (RectangleF)obj;
+            return r.x == x && r.y == y && r.Width == Width && r.Height == Height;
+        }
+        return false;
     }
 }

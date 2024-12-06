@@ -1,6 +1,6 @@
 
 
-namespace UnamedGame.UI;
+namespace Game.UI;
 
 using Microsoft.Xna.Framework;
 using Abstract.UI;

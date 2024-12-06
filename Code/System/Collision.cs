@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using UnamedGame.Abstract;
-using UnamedGame.Helpers;
+using Game.Abstract;
+using Game.Helpers;
 
-namespace UnamedGame.System.Collision;
+namespace Game.System.Collision;
 public class CollisionManager
 {
     public List<Collidable> collidables = new List<Collidable>();

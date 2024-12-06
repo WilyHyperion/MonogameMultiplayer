@@ -1,5 +1,5 @@
 
-namespace UnamedGame.Helpers;
+namespace Game.Helpers;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

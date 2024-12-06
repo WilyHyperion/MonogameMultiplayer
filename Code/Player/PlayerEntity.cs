@@ -3,14 +3,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using UnamedGame.Abstract;
-using UnamedGame;
-using UnamedGame.Helpers;
-using UnamedGame.GameSystem.UI;
-using UnamedGame.UI;
-using UnamedGame.Abstract.Entites;
-using UnamedGame.System.Collision;
-namespace UnamedGame.Player;
+using Game.Abstract;
+using Game;
+using Game.Helpers;
+using Game.GameSystem.UI;
+using Game.UI;
+using Game.Abstract.Entites;
+using Game.System.Collision;
+namespace Game.Player;
 
 public class PlayerEntity : SoildEntity
 {
@@ -39,29 +39,27 @@ public class PlayerEntity : SoildEntity
 
     }
     public float Speed = 2;
-    public float Friction = 0.9f;
+    public float Friction = 0f;
     PlayerInput input;
-    
     public override void Update()
     {
         input = new PlayerInput();
         if (input.IsKeyDown(Keys.W))
         {
-            Velocity.Y += -1;
+            Velocity.Y += -1f;
         }
         else if (input.IsKeyDown(Keys.S))
         {
-            Velocity.Y += 1;
+            Velocity.Y += 1f;
         }
         if (input.IsKeyDown(Keys.A))
         {
-            Velocity.X += -1;
+            Velocity.X += -1f;
         }
         else if (input.IsKeyDown(Keys.D))
         {
-            Velocity.X += 1;
+            Velocity.X += 1f;
         }
-        
         if (input.IsKeyDown(Keys.Enter))
         {
             HP -= 1;
@@ -101,6 +99,7 @@ public class PlayerEntity : SoildEntity
     }
     public override bool ShouldCollide(Collidable other)
     {
+        Logger.Log($"  ${OldBounds}   and ${Bounds} equal {OldBounds == Bounds}");
         return true;
     }
 

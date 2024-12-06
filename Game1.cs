@@ -6,18 +6,21 @@ using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using UnamedGame.Abstract;
-using UnamedGame.Helpers;
-using UnamedGame.Player;
-using UnamedGame.GameSystem;
-using UnamedGame.GameSystem.UI;
-using UnamedGame.System.Collision;
-using UnamedGame.Entites;
+using Game.Abstract;
+using Game.Helpers;
+using Game.Player;
+using Game.GameSystem;
+using Game.GameSystem.UI;
+using Game.System.Collision;
+using Game.Entites;
+using Game.Abstract.UI;
+using System.Diagnostics;
 
-namespace UnamedGame;
+namespace Game;
 
-public class UnamedGame : Game
+public class UnamedGame : Microsoft.Xna.Framework.Game
 {
+    public int GameTick;
     public CollisionManager collisionManager = new CollisionManager();
     public Random random = new Random();
     public KeyboardState oldState;
@@ -28,6 +31,9 @@ public class UnamedGame : Game
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    internal float updateTime;
+    internal float drawTime;
+    Stopwatch stopwatch = new Stopwatch();
 
     public UnamedGame()
     {
@@ -45,6 +51,7 @@ public class UnamedGame : Game
         Console.WriteLine("Game Initialized");
         camera = new Camera(new Vector2(0, 0), GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
         base.Initialize();
+
     }
 
     protected override void LoadContent()
@@ -53,6 +60,11 @@ public class UnamedGame : Game
         player = new PlayerEntity(new Vector2(0, 0));
         entities.Add(player);
         UIManager.loadElementTextures();
+        SpriteFont font = Content.Load<SpriteFont>("Roboto");
+        UILogText uIText = new UILogText( font);
+        Helpers.Logger.LogText = uIText;
+        UIManager.AddElement(uIText);
+        UIManager.AddElement(new Preformance(font));
     }
     public void SpawnEntity(Entity entity)
     {
@@ -64,6 +76,8 @@ public class UnamedGame : Game
     }
     protected override void Update(GameTime gameTime)
     {
+        stopwatch.Restart();
+        GameTick++;
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
         if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
@@ -100,10 +114,13 @@ public class UnamedGame : Game
         UIManager.UpdateElements();
         camera.Update();
         oldState = Keyboard.GetState();
+        updateTime = stopwatch.ElapsedMilliseconds;
+
     }
 
     protected override void Draw(GameTime gameTime)
     {
+        stopwatch.Restart();
         GraphicsDevice.Clear(Color.CornflowerBlue);
         _spriteBatch.Begin(transformMatrix: camera.TransformMatrix);
         foreach (Entity entity in entities)
@@ -117,5 +134,6 @@ public class UnamedGame : Game
         UIManager.Draw(_spriteBatch);
         base.Draw(gameTime);
         _spriteBatch.End();
+        drawTime = stopwatch.ElapsedMilliseconds;
     }
 }

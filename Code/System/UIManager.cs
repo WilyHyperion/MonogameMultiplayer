@@ -5,13 +5,14 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using UnamedGame.Abstract.UI;
-namespace UnamedGame.GameSystem.UI;
+using Game.Abstract.UI;
+namespace Game.GameSystem.UI;
 public static class UIManager {
     public static List<UIElement> Elements = new List<UIElement>();
     public static void Draw(SpriteBatch s){
         foreach (UIElement e in Elements){
-            e.Draw(s);
+            if(e.Visible)
+                e.Draw(s);
         }
     }
     public static void UpdateElements(){

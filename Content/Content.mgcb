@@ -25,17 +25,12 @@
 /processorParam:TextureFormat=Color
 /build:gun.png
 
-#begin UI/HPBar.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
+#begin Roboto.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:UI/HPBar.png
+/processorParam:TextureFormat=Compressed
+/build:Roboto.spritefont
 
 #begin UI/HPBar.png
 /importer:TextureImporter

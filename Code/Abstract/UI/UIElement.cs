@@ -1,5 +1,5 @@
 
-namespace UnamedGame.Abstract.UI;
+namespace Game.Abstract.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -19,4 +19,5 @@ public abstract class UIElement {
     public static void LoadTexture(Texture2D t){
         texture = t;
     }
+    public bool Visible = true;
 }
