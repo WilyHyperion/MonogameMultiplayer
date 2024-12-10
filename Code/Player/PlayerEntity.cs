@@ -13,7 +13,10 @@ using Game.System.Collision;
 namespace Game.Player;
 
 public class PlayerEntity : SoildEntity
+
 {
+    public bool remote = false;
+    public string name = "";
     public int HP = 100;
     public int maxHP = 100;
     public Texture2D Texture;
@@ -38,32 +41,37 @@ public class PlayerEntity : SoildEntity
         UIManager.AddElement(new HPBar());
 
     }
-    public float Speed = 2;
-    public float Friction = 0f;
+    public float Speed = 3f;
     PlayerInput input;
     public override void Update()
     {
-        input = new PlayerInput();
+        if (!remote)
+        {
+            input = new PlayerInput();
+        }
+        Vector2 addition = Vector2.Zero;
         if (input.IsKeyDown(Keys.W))
         {
-            Velocity.Y += -1f;
+            addition.Y += -1f;
         }
         else if (input.IsKeyDown(Keys.S))
         {
-            Velocity.Y += 1f;
+            addition.Y += 1f;
         }
         if (input.IsKeyDown(Keys.A))
         {
-            Velocity.X += -1f;
+            addition.X += -1f;
         }
         else if (input.IsKeyDown(Keys.D))
         {
-            Velocity.X += 1f;
+            addition.X += 1f;
         }
-        if (input.IsKeyDown(Keys.Enter))
+        if (addition.Length() != 0)
         {
-            HP -= 1;
+            addition.Normalize();
+            addition *= Speed;
         }
+        Velocity += addition;
         if (input.MouseState.LeftButton == ButtonState.Pressed && animationTick == -1)
         {
             animationTick = 0;
@@ -77,13 +85,10 @@ public class PlayerEntity : SoildEntity
             animationTick++;
         }
     }
+    public float Friction = 0.1f;
     public override void PostUpdate()
-    { 
-        Velocity *= Friction;
-        if (Velocity.Length() < 0.1)
-        {
-            Velocity = Vector2.Zero;
-        }
+    {
+        this.Velocity *= this.Friction;
     }
     int animationTick = -1;
     public override void Draw(SpriteBatch spriteBatch)
@@ -92,10 +97,10 @@ public class PlayerEntity : SoildEntity
         var mousepos = UnamedGame.Instance.camera.ScreenToWorld(new Vector2(input.MouseState.X, input.MouseState.Y));
         var direction = mousepos - this.Position;
         var rotation = (float)Math.Atan2(direction.Y + 0.0f, direction.X + 0.0f) + MathHelper.ToRadians(90f);
-        spriteBatch.Draw(Texture, Position + new Vector2(Bounds.Width /2, Bounds.Height /2) , null, Color.White, rotation, new Vector2(Bounds.Width / 2, Bounds.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
+        spriteBatch.Draw(Texture, Position + new Vector2(Bounds.Width / 2, Bounds.Height / 2), null, Color.White, rotation, new Vector2(Bounds.Width / 2, Bounds.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
         Vector2 gunOffset = new Vector2(Texture.Width, Texture.Height) * 0.5f;
         gunOffset.Rotate(rotation - MathHelper.ToRadians(90f));
-        spriteBatch.Draw(guntexture, Position + gunOffset + new Vector2(Bounds.Width /2, Bounds.Height /2) , DrawHelpers.sampleAnimationFrame(guntexture, 8, 1, animationTick), Color.White, rotation, new Vector2(Texture.Width / 2, Texture.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
+        spriteBatch.Draw(guntexture, Position + gunOffset + new Vector2(Bounds.Width / 2, Bounds.Height / 2), DrawHelpers.sampleAnimationFrame(guntexture, 8, 1, animationTick), Color.White, rotation, new Vector2(Texture.Width / 2, Texture.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
     }
     public override bool ShouldCollide(Collidable other)
     {

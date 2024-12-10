@@ -33,7 +33,8 @@ public abstract class SoildEntity : Collidable
             }
             //3 cases -either its x should be snapped or the y should be snapped, or it looks like both, so we need to do some math to find out where it would have colided along the step
             //if its the x, then the y value of the last bounds should be inside the rectangle
-            //and vice versa
+            //and vice versa 
+
             if(OldBounds.Right < other.Bounds.Left){
                 //right
                 Bounds.X = other.Bounds.Left - Bounds.Width;
@@ -51,6 +52,30 @@ public abstract class SoildEntity : Collidable
                 Bounds.Y = other.Bounds.Bottom;
             }
             else if (OldBounds.Intersects(other.Bounds)) {
+                //if the old bounds also overlaps, we cant find out where it came from.
+                //instead, move it to the closest side
+                float xdif = Math.Abs(Math.Max(OldBounds.Left, other.Bounds.Left) - Math.Min(OldBounds.Right, other.Bounds.Right));
+                float ydif = Math.Abs(Math.Max(OldBounds.Top, other.Bounds.Top) - Math.Min(OldBounds.Bottom, other.Bounds.Bottom));
+                if (xdif < ydif)
+                {
+                    float rightdist = OldBounds.Left - other.Bounds.Left;
+                    if(rightdist > other.Bounds.Right - OldBounds.Right){
+                        this.Bounds.Left = other.Bounds.Right;
+                    }
+                    else {
+                        this.Bounds.Right  = other.Bounds.Left;
+                    }
+                }
+                else
+                {
+                    float topdist = OldBounds.Top - other.Bounds.Top;
+                    if(topdist > other.Bounds.Bottom - OldBounds.Bottom){
+                        this.Bounds.Top = other.Bounds.Bottom;
+                    }
+                    else {
+                        this.Bounds.Bottom = other.Bounds.Top;
+                    }
+                }
             }
             else{
             }
