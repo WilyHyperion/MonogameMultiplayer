@@ -3,6 +3,23 @@ using Microsoft.Xna.Framework;
 namespace Game.Helpers;
 
 public class RectangleF {
+    public override int GetHashCode()
+        {
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 17;
+                hash = hash * 23 + x.GetHashCode();
+                hash = hash * 23 + y.GetHashCode();
+                hash = hash * 23 + Width.GetHashCode();
+                hash = hash * 23 + Height.GetHashCode();
+                return hash;
+            }
+        }
+    public Vector2 Middle {
+        get{
+            return new Vector2(X + (Width/2), Y + (Height/2));
+        }
+    }
     float x;
     float y;
     public float X{

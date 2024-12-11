@@ -1,11 +1,16 @@
 
 namespace Game.Helpers;
 
+using System;
+using global::System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 public static class DrawHelpers
 {
+    public static Color GetRandomColor(this Random r){
+        return new Color(r.Next(0, 255), r.Next(0,255), r.Next(0,255));
+    }
     static Texture2D pixel = new Texture2D(UnamedGame.Instance.GraphicsDevice, 1, 1);
 
     public static void DrawRectangleOutline(SpriteBatch spriteBatch, Rectangle rectangle, Color color)

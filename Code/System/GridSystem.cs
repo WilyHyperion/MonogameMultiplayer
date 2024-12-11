@@ -58,6 +58,19 @@ public class GridSystem {
         }
         Grid[(int)gridPosition.X][(int)gridPosition.Y].Remove(node);
     }
+    public List<Node> GetNodesWithin(Vector2 worldPos, float dist){
+        Vector2 gridPosition = GetGridPosition(worldPos);
+        List<Node> nodes = new List<Node>();
+        int searchAmount = (int)Math.Ceiling(dist/GridSize)/2;
+        for(int x = -searchAmount; x < searchAmount; x++){
+            for(int y = -searchAmount; y < searchAmount; y++){
+                if(Grid.ContainsKey((int)gridPosition.X + x) && Grid[(int)gridPosition.X + x].ContainsKey((int)gridPosition.Y + y)){
+                    nodes.AddRange(Grid[(int)gridPosition.X + x][(int)gridPosition.Y + y]);
+                }
+            }
+        }
+        return nodes;
+    }
     public List<Node> GetNodesInAndAround(Vector2 worldPos){
         Vector2 gridPosition = GetGridPosition(worldPos);
         List<Node> nodes = new List<Node>();

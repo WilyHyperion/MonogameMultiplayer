@@ -17,6 +17,7 @@ using Game.Abstract.UI;
 using System.Diagnostics;
 using Server.Packets;
 using Game.GameSystem.Networking;
+using Game.Abstract.Entites;
 
 namespace Game;
 
@@ -24,13 +25,14 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
 {
     public int GameTick;
     public CollisionManager collisionManager = new CollisionManager();
-    public Random random = new Random();
+    public static Random random = new Random();
     public KeyboardState oldState;
     public List<Entity> entities = new List<Entity>();
     public PlayerEntity player;
     public Camera camera;
     public static UnamedGame Instance;
-
+    public Team playerTeam = new Team("Player");
+    public Team enemyTeam = new Team("Enemy");
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     internal float updateTime;
@@ -61,7 +63,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+        Unit.InitializeUnits(Content);
         UIManager.loadElementTextures();
         SpriteFont font = Content.Load<SpriteFont>("Roboto");
         UILogText uIText = new UILogText( font);

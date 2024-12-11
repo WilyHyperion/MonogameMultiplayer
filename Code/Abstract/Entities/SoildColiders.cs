@@ -26,7 +26,7 @@ public abstract class SoildEntity : Collidable
             }
             if(other != null && other is SoildEntity){
                 SoildEntity otherSoild = (SoildEntity)other;
-                if (otherSoild.strength < this.strength && !(other is StageGeometry))
+                if (otherSoild.strength < this.strength && other is not StageGeometry)
                 {
                     return;
                 }
