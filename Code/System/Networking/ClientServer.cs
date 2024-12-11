@@ -1,5 +1,6 @@
 
 
+using System;
 using System.Net;
 using System.Net.Sockets;
 using Server;
@@ -16,6 +17,10 @@ public class ClientServer {
         byte[] send = p.Send();
         client.Send(send, send.Length);
         p.data = client.Receive(ref ep);
+        Console.WriteLine(p.data.Length);
+        foreach(byte b in p.data){
+            Console.WriteLine(b);
+        }
         p.ClientReceive();
 
     }

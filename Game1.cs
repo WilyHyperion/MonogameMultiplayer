@@ -145,6 +145,8 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
 
     public void AddNewRemote(string name, Vector2 pos)
     {
+        Console.WriteLine(name);
+        Console.WriteLine(pos);
         PlayerEntity p = new PlayerEntity(pos);
         p.name = name;
         SpawnEntity(p);

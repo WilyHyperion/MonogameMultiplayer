@@ -8,6 +8,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Game.Abstract.UI;
 namespace Game.GameSystem.UI;
 public static class UIManager {
+    //TODO declare the height stuff in the class
+    public static void AddLow(UIElement e){
+        Elements.Insert(0, e);
+    }
     public static List<UIElement> Elements = new List<UIElement>();
     public static void Draw(SpriteBatch s){
         foreach (UIElement e in Elements){

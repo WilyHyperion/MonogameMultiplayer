@@ -19,8 +19,8 @@ public class PlayerEntity : SoildEntity
     public string name = "";
     public int HP = 100;
     public int maxHP = 100;
-    public Texture2D Texture;
-    public Texture2D guntexture;
+    public static Texture2D Texture;
+    public static Texture2D guntexture;
     public PlayerEntity(Vector2 position)
     {
         var i = UnamedGame.Instance;
@@ -29,7 +29,7 @@ public class PlayerEntity : SoildEntity
         Texture = i.Content.Load<Texture2D>("unit");
         guntexture = i.Content.Load<Texture2D>("gun");
         Bounds = new RectangleF(position.X, position.Y, Texture.Width, Texture.Height);
-        UIManager.AddElement(new HPBar());
+        UIManager.AddLow(new HPBar());
     }
     public PlayerEntity(Vector2 position, GridSystem s)
     {
@@ -38,51 +38,52 @@ public class PlayerEntity : SoildEntity
         Texture = i.Content.Load<Texture2D>("unit");
         guntexture = i.Content.Load<Texture2D>("gun");
         Bounds = new RectangleF(position.X, position.Y, Texture.Width, Texture.Height);
-        UIManager.AddElement(new HPBar());
+        UIManager.AddLow(new HPBar());
 
     }
     public float Speed = 3f;
     PlayerInput input;
     public override void Update()
     {
-        if (!remote)
+        if (true)//(!remote)
         {
             input = new PlayerInput();
-        }
-        Vector2 addition = Vector2.Zero;
-        if (input.IsKeyDown(Keys.W))
-        {
-            addition.Y += -1f;
-        }
-        else if (input.IsKeyDown(Keys.S))
-        {
-            addition.Y += 1f;
-        }
-        if (input.IsKeyDown(Keys.A))
-        {
-            addition.X += -1f;
-        }
-        else if (input.IsKeyDown(Keys.D))
-        {
-            addition.X += 1f;
-        }
-        if (addition.Length() != 0)
-        {
-            addition.Normalize();
-            addition *= Speed;
-        }
-        Velocity += addition;
-        if (input.MouseState.LeftButton == ButtonState.Pressed && animationTick == -1)
-        {
-            animationTick = 0;
-        }
-        else if (animationTick >= guntexture.Height / 8)
-        {
-            animationTick = -1;
-        }
-        else if (animationTick > -1)
-        {
-            animationTick++;
+
+            Vector2 addition = Vector2.Zero;
+            if (input.IsKeyDown(Keys.W))
+            {
+                addition.Y += -1f;
+            }
+            else if (input.IsKeyDown(Keys.S))
+            {
+                addition.Y += 1f;
+            }
+            if (input.IsKeyDown(Keys.A))
+            {
+                addition.X += -1f;
+            }
+            else if (input.IsKeyDown(Keys.D))
+            {
+                addition.X += 1f;
+            }
+            if (addition.Length() != 0)
+            {
+                addition.Normalize();
+                addition *= Speed;
+            }
+            Velocity += addition;
+            if (input.MouseState.LeftButton == ButtonState.Pressed && animationTick == -1)
+            {
+                animationTick = 0;
+            }
+            else if (animationTick >= guntexture.Height / 8)
+            {
+                animationTick = -1;
+            }
+            else if (animationTick > -1)
+            {
+                animationTick++;
+            }
         }
     }
     public float Friction = 0.1f;

@@ -39,7 +39,7 @@ namespace Server
                 {
                     Console.WriteLine("Waiting for broadcast");
                     byte[] bytes = listener.Receive(ref groupEP);
-                    Console.WriteLine("Received broadcast from {0} :\n {1}\n", groupEP.ToString(), Encoding.ASCII.GetString(bytes, 0, bytes.Length));
+                    Console.WriteLine("Received broadcast from {0} :\n {1}\n", groupEP.ToString(), bytes);
                     byte[] response = await HandlePacket(bytes);
                     listener.Send(response, response.Length, groupEP);
                 }
