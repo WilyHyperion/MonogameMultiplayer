@@ -1,6 +1,7 @@
 
 
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,6 +9,9 @@ namespace Game.Abstract
 {
     public abstract class Entity
     {
+        public virtual Dictionary<string, object> GetDebugInformation(){
+            return new Dictionary<string, object>();
+        }
         public int ID;
         public Vector2 Velocity;
         public bool Active = true;

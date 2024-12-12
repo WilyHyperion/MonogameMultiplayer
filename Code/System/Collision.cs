@@ -74,7 +74,7 @@ public abstract class Collidable : Entity
     {
         get
         {
-            return new Vector2(Bounds.X, Bounds.Y);
+            return new Vector2(Bounds.X , Bounds.Y);
         }
     }
 }

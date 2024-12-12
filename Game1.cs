@@ -19,6 +19,10 @@ using Server.Packets;
 using Game.GameSystem.Networking;
 using Game.Abstract.Entites;
 using Game.Entites.Units;
+using Game.System;
+using Debug = Game.System.Debug;
+using System.Runtime.Serialization;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Game;
 
@@ -40,6 +44,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     internal float drawTime;
     Stopwatch stopwatch = new Stopwatch();
 
+
     public UnamedGame()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -60,13 +65,13 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         camera = new Camera(new Vector2(0, 0), GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
         base.Initialize();
     }
-
+    public static SpriteFont font;
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         Unit.InitializeUnits(Content);
         UIManager.loadElementTextures();
-        SpriteFont font = Content.Load<SpriteFont>("Roboto");
+         font = Content.Load<SpriteFont>("Roboto");
         UILogText uIText = new UILogText( font);
         Helpers.Logger.LogText = uIText;
         UIManager.AddElement(uIText);
@@ -95,8 +100,13 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
             Exit();
         if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
         {
-            Unit.SpawnUnit<BasicChaser>(player.Position, playerTeam);
+            Unit.SpawnUnit<BasicChaser>(player.Position + random.NextVector2(-20, 20), playerTeam);
+            Unit.SpawnUnit<BasicChaser>(player.Position + random.NextVector2(-20, 20), enemyTeam );
         }
+        if (Keyboard.GetState().IsKeyDown(Keys.OemTilde) && oldState.IsKeyUp(Keys.OemTilde)){
+            Debug.ToggleDebug();
+        }
+       
         base.Update(gameTime);
         for (int i = 0; i < entities.Count; i++)
         {
@@ -115,6 +125,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
                         c.OnCollision(node.collidable);
                     }
                 }
+            
                 c.PostUpdate();
             }
             if (!entity.Active)
@@ -136,10 +147,16 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         foreach (Entity entity in entities)
         {
             entity.Draw(_spriteBatch);
+            if(Debug.DebugMode)
+                Debug.DrawDebugInformation(entity, _spriteBatch);
+        }
+        if(Debug.DebugMode){
+            Debug.DrawDebugGrid( _spriteBatch, collisionManager.gridSystem);
         }
         _spriteBatch.End();
         _spriteBatch.Begin();
         UIManager.Draw(_spriteBatch);
+
         base.Draw(gameTime);
         _spriteBatch.End();
         drawTime = stopwatch.ElapsedMilliseconds;

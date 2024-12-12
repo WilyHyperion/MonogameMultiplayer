@@ -19,6 +19,10 @@ public class Node {
         this.bounds = bounds;
         this.ID = ID;
     }
+    public override string ToString()
+    {
+        return $"Bounds :{ this.bounds}  ID : {ID}";
+    }
 }
 
 public class GridSystem {
@@ -27,7 +31,7 @@ public class GridSystem {
         return nextID++;
     }
     //TODO determine this better
-    const int GridSize = 250;
+    public const int GridSize = 250;
     public static Vector2 GetGridPosition(Vector2 position){
         return new Vector2((int)(position.X / GridSize), (int)(position.Y / GridSize));
     }
@@ -68,7 +72,7 @@ public class GridSystem {
                     nodes.AddRange(Grid[(int)gridPosition.X + x][(int)gridPosition.Y + y]);
                 }
             }
-        }
+        }   
         return nodes;
     }
     public List<Node> GetNodesInAndAround(Vector2 worldPos){

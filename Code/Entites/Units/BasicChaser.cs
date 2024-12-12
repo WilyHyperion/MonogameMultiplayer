@@ -2,6 +2,7 @@
 
 
 
+using System;
 using System.Numerics;
 using Game.Abstract.Entites;
 using Game.Helpers;
@@ -17,10 +18,11 @@ public class BasicChaser : Unit
     public int counter;
     public override void AI()
     {
-        counter++;
-        if (counter % 120 == 0)
-        {
-            this.Velocity = UnamedGame.random.NextVector2(-20, 20);
+        Unit e = this.getNearestEnemy();
+        if(e != null){
+            this.Velocity = this.Position - e.Position;
+            this.Velocity.Normalize();
+            this.Velocity *= 5f;
         }
     }
 }
