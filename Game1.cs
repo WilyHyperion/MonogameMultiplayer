@@ -18,6 +18,7 @@ using System.Diagnostics;
 using Server.Packets;
 using Game.GameSystem.Networking;
 using Game.Abstract.Entites;
+using Game.Entites.Units;
 
 namespace Game;
 
@@ -94,7 +95,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
             Exit();
         if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
         {
-            SpawnEntity(new StageGeometry(player.Position + new Vector2(random.Next(-500, 500), random.Next(-500, 500)), new Vector2(random.Next(50, 100), random.Next(50, 100)), new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255))));
+            Unit.SpawnUnit<BasicChaser>(player.Position, playerTeam);
         }
         base.Update(gameTime);
         for (int i = 0; i < entities.Count; i++)
@@ -108,10 +109,9 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
                 c.MoveBy(c.Velocity);
                 if (c.ShouldCheckCollisions)
                 {
-                    var collisions = collisionManager.gridSystem.GetCollisions(c.node.bounds);
+                    var collisions = collisionManager.gridSystem.GetCollisions(c.Bounds);
                     foreach (Node node in collisions)
                     {
-                        Console.WriteLine(node.collidable.whoAmi);
                         c.OnCollision(node.collidable);
                     }
                 }

@@ -94,10 +94,12 @@ public class GridSystem {
     public List<Node> GetCollisions(RectangleF bounds){
         List<Node> nodes = new List<Node>();
         Vector2 gridPosition = GetGridPosition(new Vector2(bounds.X, bounds.Y));
+        int num = 0;
         for(int x = -1; x < 2; x++){
             for(int y = -1; y < 2; y++){
                 if(Grid.ContainsKey((int)gridPosition.X + x) && Grid[(int)gridPosition.X + x].ContainsKey((int)gridPosition.Y + y)){
                     foreach(Node node in Grid[(int)gridPosition.X + x][(int)gridPosition.Y + y]){
+                        num++;
                         if(node.bounds.Intersects(bounds) && node.collidable != null && node.collidable.Bounds != bounds){
                             nodes.Add(node);
                         }
@@ -105,6 +107,7 @@ public class GridSystem {
                 }
             }
         }
+        Logger.Log($"Checking {num} Nodes with player");
         return nodes;
     }
 }

@@ -22,18 +22,27 @@ public class StaticUnitInformation {
         Console.WriteLine("t.name" + path);
         try
         {
-            texture = manager.Load<Texture2D>(path);
+            texture = manager.Load<Texture2D>(path.Replace(".", "/"));
         }
         catch (Exception)
         {
             Console.WriteLine("Failed to find texture");
-            texture = manager.Load<Texture2D>("unit");
+            this.texture = manager.Load<Texture2D>("unit");
+            Console.WriteLine(texture);
         }
     }
 }
 public abstract class Unit : SoildEntity
 {
-
+    public static Unit SpawnUnit<T>(Vector2 position, Team team) where T : Unit{
+        Unit u = (Unit)Activator.CreateInstance(typeof(T));
+        u.SetDefaults();
+        u.Bounds.X = position.X;
+        u.Bounds.Y = position.Y;
+        UnamedGame.Instance.SpawnEntity(u);
+        team.Units.Add(u);
+        return u;
+    }
     public static Dictionary<Type, StaticUnitInformation> unitTypes = new Dictionary<Type, StaticUnitInformation>();
     public static void InitializeUnits(ContentManager content){
         StaticUnitInformation.manager = content;
@@ -108,7 +117,14 @@ public abstract class Unit : SoildEntity
         return res;
     }
     public int HP = 100;
-    public static Texture2D texture;
+    public Texture2D Texture {
+        get {
+            return unitTypes[GetType()].texture;
+        }
+        set {
+            unitTypes[GetType()].texture = value;
+        }
+    }
     public virtual void SetDefaults(){
     }
     public virtual void AI(){
@@ -118,10 +134,9 @@ public abstract class Unit : SoildEntity
     {
         this.AI();
     }
-    public Texture2D Texture;
     public Team team;
     public override void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(this.Texture, _bounds, Color.White);
+        spriteBatch.Draw(this.Texture, this.Position, Color.White);
     }
 }

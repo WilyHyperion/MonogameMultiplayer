@@ -105,7 +105,6 @@ public class PlayerEntity : SoildEntity
     }
     public override bool ShouldCollide(Collidable other)
     {
-        Logger.Log($"  ${OldBounds}   and ${Bounds} equal {OldBounds == Bounds}");
         return true;
     }
 

@@ -32,7 +32,7 @@ public abstract class Collidable : Entity
     public bool ShouldCheckCollisions = true;
     public Node node;
     public GridSystem gridSystem;
-    public RectangleF _bounds { get; set; }
+    public RectangleF _bounds = new RectangleF();
     public RectangleF OldBounds { get; set; }
     public RectangleF Bounds
     {

@@ -32,7 +32,7 @@ public static class UIManager {
                 var method = element.GetMethod("LoadTexture", BindingFlags.Static | BindingFlags.Public |  BindingFlags.FlattenHierarchy, null, new Type[] {typeof(Texture2D)}, null);
                 method.Invoke(null, new object[] {texture});
             }
-            catch (Exception e){
+            catch (Exception){
                 Console.WriteLine("Error loading texture for " + element.Name);
             }
 
