@@ -23,4 +23,8 @@ public class Team {
         this.name = name;
         this.TeamColor = c;
     }
+    public override bool Equals(object obj)
+    {
+        return this.name == ((Team)obj).name;
+    }
 }

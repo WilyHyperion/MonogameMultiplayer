@@ -53,11 +53,13 @@ public class GridSystem {
             return;
         }
         Node node = (Node)nullnode;
-        Vector2 gridPosition = GetGridPosition(new Vector2(node.bounds.X, node.bounds.Y));
+        Vector2 gridPosition = GetGridPosition(node.bounds.Middle);
         if(!Grid.ContainsKey((int)gridPosition.X)){
+            Console.WriteLine("No grid");
             return;
         }
         if(!Grid[(int)gridPosition.X].ContainsKey((int)gridPosition.Y)){
+            Console.WriteLine("No grid");   
             return;
         }
         Grid[(int)gridPosition.X][(int)gridPosition.Y].Remove(node);
@@ -66,7 +68,7 @@ public class GridSystem {
         Vector2 gridPosition = GetGridPosition(worldPos);
         List<Node> nodes = new List<Node>();
         int searchAmount = (int)Math.Ceiling(dist/GridSize)/2;
-        for(int x = -searchAmount; x < searchAmount; x++){
+        for(int x = -searchAmount; x <  searchAmount; x++){
             for(int y = -searchAmount; y < searchAmount; y++){
                 if(Grid.ContainsKey((int)gridPosition.X + x) && Grid[(int)gridPosition.X + x].ContainsKey((int)gridPosition.Y + y)){
                     nodes.AddRange(Grid[(int)gridPosition.X + x][(int)gridPosition.Y + y]);
@@ -111,7 +113,6 @@ public class GridSystem {
                 }
             }
         }
-        Logger.Log($"Checking {num} Nodes with player");
         return nodes;
     }
 }

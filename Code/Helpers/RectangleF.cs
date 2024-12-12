@@ -19,7 +19,12 @@ public class RectangleF {
         get{
             return new Vector2(X + (Width/2), Y + (Height/2));
         }
+    }public Vector2 Center {
+        get{
+            return new Vector2(X + (Width/2), Y + (Height/2));
+        }
     }
+
     float x;
     float y;
     public float X{

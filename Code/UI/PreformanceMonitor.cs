@@ -26,7 +26,7 @@ public class Preformance : UIText
         }
     }
 
-    public Preformance( SpriteFont font) : base("", new Vector2(0, 0))
+    public Preformance( SpriteFont font) : base("", new Vector2(300, 0))
     {
         this.Font = font;
     }

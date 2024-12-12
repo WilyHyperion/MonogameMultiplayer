@@ -20,7 +20,7 @@ public class BasicChaser : Unit
     {
         Unit e = this.getNearestEnemy();
         if(e != null){
-            this.Velocity = this.Position - e.Position;
+            this.Velocity =  e.Position - this.Position;
             this.Velocity.Normalize();
             this.Velocity *= 5f;
         }

@@ -100,8 +100,8 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
             Exit();
         if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
         {
-            Unit.SpawnUnit<BasicChaser>(player.Position + random.NextVector2(-20, 20), playerTeam);
-            Unit.SpawnUnit<BasicChaser>(player.Position + random.NextVector2(-20, 20), enemyTeam );
+            Unit.SpawnUnit<BasicChaser>(player.Position + random.NextVector2(0, 500), playerTeam);
+            Unit.SpawnUnit<BasicChaser>(player.Position + random.NextVector2(-500, 0), enemyTeam );
         }
         if (Keyboard.GetState().IsKeyDown(Keys.OemTilde) && oldState.IsKeyUp(Keys.OemTilde)){
             Debug.ToggleDebug();
@@ -138,7 +138,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         updateTime = stopwatch.ElapsedMilliseconds;
 
     }
-
+    //TODO - Only Draw entities within camera bounds
     protected override void Draw(GameTime gameTime)
     {
         stopwatch.Restart();

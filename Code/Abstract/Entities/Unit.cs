@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Game.Abstract.Entites;
+using Game.Helpers;
 using Game.System.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -40,6 +41,7 @@ public abstract class Unit : SoildEntity
         u.Bounds.X = position.X;
         u.Bounds.Y = position.Y;
         UnamedGame.Instance.SpawnEntity(u);
+        u.team = team;
         team.Units.Add(u);
         return u;
     }
@@ -85,6 +87,9 @@ public abstract class Unit : SoildEntity
                     }
                 }
             }
+            else {
+                Logger.Log($"Not a unit  {p.collidable}  {p.collidable.GetType()}   {nearby.Count}  {this.whoAmi}");
+            }
 
         }
         return res;
@@ -104,6 +109,7 @@ public abstract class Unit : SoildEntity
                 }
                 else
                 {
+                    Console.WriteLine("Found ally");
                     float dist = (this.Bounds.Middle - u.Bounds.Middle).LengthSquared();
                     if (nearist > dist)
                     {
