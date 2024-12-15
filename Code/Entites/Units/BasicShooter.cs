@@ -7,6 +7,7 @@ using System.Numerics;
 using Game.Abstract.Entities;
 using Game.Entities.Projectiles;
 using Game.Helpers;
+using Microsoft.Xna.Framework;
 
 namespace Game.Entities.Units;
 
@@ -28,6 +29,10 @@ public class BasicShooter : Unit
             float factor = 2f;
             if(dist < 50000){
                 factor *= -1;
+            }
+            else {
+                
+                this.Velocity.Rotate(MathHelper.ToDegrees(50f));
             }
             this.Velocity *= factor;
             if(counter % 15 == 0){
