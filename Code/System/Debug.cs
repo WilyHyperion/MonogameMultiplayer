@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Game.Abstract;
+using Game.Abstract.Entities;
 using Game.GameSystem;
 using Game.Helpers;
 using Game.System.Collision;
@@ -45,6 +46,9 @@ public static class Debug
 
         if (e is Collidable c)
         {
+            if(e is Projectile ){
+                return;
+            }
             draws.Add("Bounds", c.Bounds);
             draws.Add("Velocity", e.Velocity);
             draws.Add("WhoAmI", e.whoAmi);

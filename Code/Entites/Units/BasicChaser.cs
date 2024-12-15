@@ -19,10 +19,18 @@ public class BasicChaser : Unit
     public override void AI()
     {
         Unit e = this.getNearestEnemy();
-        if(e != null){
-            this.Velocity =  e.Position - this.Position;
-            this.Velocity.Normalize();
-            this.Velocity *= 5f;
+        if (e != null)
+        {
+            if ((this.Position - e.Position).LengthSquared() < 50)
+            {
+                this.Velocity = Vector2.Zero;
+            }
+            else
+            {
+                this.Velocity = e.Position - this.Position;
+                this.Velocity.Normalize();
+                this.Velocity *= 5f;
+            }
         }
     }
 }

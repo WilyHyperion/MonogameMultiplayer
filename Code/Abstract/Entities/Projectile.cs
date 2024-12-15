@@ -12,6 +12,7 @@ namespace Game.Abstract.Entities;
 
 public abstract class Projectile : Collidable
 {
+    public int TicksLeft = 600;
     public bool RotateToVelocity = true;
     public static Projectile NewProjectile<T>(Vector2 pos, Vector2 Vel, Team t) where T : Projectile
     {
@@ -62,7 +63,17 @@ public abstract class Projectile : Collidable
             }
         }
     }
+    public virtual void AI(){
 
+    }
+    public override void Update()
+    {
+        this.AI();
+        this.TicksLeft --;
+        if(this.TicksLeft <= 0){
+            this.Destroy();
+        }
+    }
     public static void InitializeUnits(ContentManager content)
     {
         StaticInformation.manager = content;

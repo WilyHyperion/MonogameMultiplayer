@@ -55,11 +55,9 @@ public class GridSystem {
         Node node = (Node)nullnode;
         Vector2 gridPosition = GetGridPosition(node.bounds.Middle);
         if(!Grid.ContainsKey((int)gridPosition.X)){
-            Console.WriteLine("No grid");
             return;
         }
         if(!Grid[(int)gridPosition.X].ContainsKey((int)gridPosition.Y)){
-            Console.WriteLine("No grid");   
             return;
         }
         Grid[(int)gridPosition.X][(int)gridPosition.Y].Remove(node);
