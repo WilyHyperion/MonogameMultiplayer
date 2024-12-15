@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/unit.png</SourceFile>
-  <SourceTime>2024-12-02T19:08:53.7151779-08:00</SourceTime>
-  <DestFile>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/unit.xnb</DestFile>
-  <DestTime>2024-12-12T18:29:06.9396753-08:00</DestTime>
+  <SourceFile>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Entities/Projectiles/Bullet.png</SourceFile>
+  <SourceTime>2024-12-15T00:12:56.7114206-08:00</SourceTime>
+  <DestFile>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/Entities/Projectiles/Bullet.xnb</DestFile>
+  <DestTime>2024-12-15T00:13:54.1788157-08:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T10:05:56-07:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

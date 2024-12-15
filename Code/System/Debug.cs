@@ -49,12 +49,12 @@ public static class Debug
             draws.Add("Velocity", e.Velocity);
             draws.Add("WhoAmI", e.whoAmi);
             draws.Add("node", c.node);
-            int i = 0;
+            string output = "";
             foreach (var key in draws)
             {
-                i++;
-                s.DrawString(f, $"{key.Key}:{key.Value.ToString()}", new Vector2(c._bounds.Left, c.Bounds.Top + i* -15) , Color.Beige );
+                 output += $"{key.Key}:{key.Value.ToString()}\n";
             }
+                s.DrawString(f,output , new Vector2(c.Bounds.Left, c.Bounds.Top + draws.Count* -20) , Color.Beige );
         }
 
     }

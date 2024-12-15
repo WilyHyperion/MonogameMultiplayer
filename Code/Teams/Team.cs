@@ -6,9 +6,10 @@ using Microsoft.Xna.Framework;
 using Game;
 using Game.Abstract;
 using Game.Helpers;
-using Game.Abstract.Entites;
+using Game.Abstract.Entities;
 
 public class Team {
+    public static Team Any = new Team("Any",  Color.Gray);
     public List<Unit> Units = new List<Unit>();
     public int ID;
     public Color TeamColor;
@@ -25,6 +26,13 @@ public class Team {
     }
     public override bool Equals(object obj)
     {
+        if(this == Any){
+            return true;
+        }
         return this.name == ((Team)obj).name;
+    }
+    public override string ToString()
+    {
+        return this.name;
     }
 }

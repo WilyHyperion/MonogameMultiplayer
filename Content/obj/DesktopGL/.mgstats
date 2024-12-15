@@ -1,5 +1,7 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/gun.png","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/gun.xnb","TextureProcessor","Texture2DContent",431,36949,0.1115669
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Roboto.spritefont","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Roboto.xnb","FontDescriptionProcessor","SpriteFontContent",2075,21538,0.0872679
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/UI/HPBar.png","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/UI/HPBar.xnb","TextureProcessor","Texture2DContent",314,96085,0.0089392
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/unit.png","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/unit.xnb","TextureProcessor","Texture2DContent",363,9301,0.0037769
+"c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Entities/Projectiles/Bullet.png","c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Entities/Projectiles/Bullet.xnb","TextureProcessor","Texture2DContent",132,485,0.1037767
+"c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Entities/Units/BasicChaser.png","c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Entities/Units/BasicChaser.xnb","TextureProcessor","Texture2DContent",514,9301,0.06139
+"c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/gun.png","c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/gun.xnb","TextureProcessor","Texture2DContent",431,36949,0.0113098
+"c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Roboto.spritefont","c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Roboto.xnb","FontDescriptionProcessor","SpriteFontContent",2075,21538,0.0768775
+"c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/UI/HPBar.png","c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/UI/HPBar.xnb","TextureProcessor","Texture2DContent",314,96085,0.0043451
+"c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/unit.png","c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/unit.xnb","TextureProcessor","Texture2DContent",363,9301,0.0021412

@@ -2,10 +2,10 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Game.Abstract.Entites;
+using Game.Abstract.Entities;
 using Game.Helpers;
 
-namespace Game.Entites
+namespace Game.Entities
 {
     public class StageGeometry : SoildEntity
     {

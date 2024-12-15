@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/unit.png</SourceFile>
-  <SourceTime>2024-12-02T19:08:53.7151779-08:00</SourceTime>
-  <DestFile>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/unit.xnb</DestFile>
-  <DestTime>2024-12-12T18:29:06.9396753-08:00</DestTime>
+  <SourceFile>c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/BasicChaser.png</SourceFile>
+  <SourceTime>2024-12-14T23:51:01.729863-08:00</SourceTime>
+  <DestFile>c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/BasicChaser.xnb</DestFile>
+  <DestTime>2024-12-14T23:51:36.3041596-08:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T10:05:56-07:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

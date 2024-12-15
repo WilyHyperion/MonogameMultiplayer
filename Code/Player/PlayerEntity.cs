@@ -8,7 +8,7 @@ using Game;
 using Game.Helpers;
 using Game.GameSystem.UI;
 using Game.UI;
-using Game.Abstract.Entites;
+using Game.Abstract.Entities;
 using Game.System.Collision;
 namespace Game.Player;
 

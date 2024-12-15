@@ -12,13 +12,13 @@ using Game.Player;
 using Game.GameSystem;
 using Game.GameSystem.UI;
 using Game.System.Collision;
-using Game.Entites;
+using Game.Entities;
 using Game.Abstract.UI;
 using System.Diagnostics;
 using Server.Packets;
 using Game.GameSystem.Networking;
-using Game.Abstract.Entites;
-using Game.Entites.Units;
+using Game.Abstract.Entities;
+using Game.Entities.Units;
 using Game.System;
 using Debug = Game.System.Debug;
 using System.Runtime.Serialization;
@@ -70,6 +70,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         Unit.InitializeUnits(Content);
+        Projectile.InitializeUnits(Content);
         UIManager.loadElementTextures();
          font = Content.Load<SpriteFont>("Roboto");
         UILogText uIText = new UILogText( font);
@@ -102,6 +103,8 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         {
             Unit.SpawnUnit<BasicChaser>(player.Position + random.NextVector2(0, 500), playerTeam);
             Unit.SpawnUnit<BasicChaser>(player.Position + random.NextVector2(-500, 0), enemyTeam );
+            Unit.SpawnUnit<BasicShooter>(player.Position + random.NextVector2(0, 500), playerTeam);
+            Unit.SpawnUnit<BasicShooter>(player.Position + random.NextVector2(-500, 0), enemyTeam );
         }
         if (Keyboard.GetState().IsKeyDown(Keys.OemTilde) && oldState.IsKeyUp(Keys.OemTilde)){
             Debug.ToggleDebug();
@@ -125,7 +128,6 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
                         c.OnCollision(node.collidable);
                     }
                 }
-            
                 c.PostUpdate();
             }
             if (!entity.Active)

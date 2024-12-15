@@ -1,4 +1,4 @@
-namespace Game.Abstract.Entites;
+namespace Game.Abstract.Entities;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,8 +6,8 @@ using System.Collision;
 using Abstract;
 using System;
 using global::System;
-using Entites;
-using global::Game.Entites;
+using Entities;
+using global::Game.Entities;
 using Game.Helpers;
 
 public abstract class SoildEntity : Collidable

@@ -100,6 +100,14 @@ public class RectangleF {
             return new Vector2(Left, Top);
         }
     }
+
+    public Vector2 BottomRight { get{
+        return new Vector2(X, Y);
+    }  set{
+        this.X = value.X;
+        this.Y = value.Y;
+    } }
+
     public RectangleF(){
         x = 0;
         y = 0;

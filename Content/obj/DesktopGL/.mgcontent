@@ -4,15 +4,14 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/gun.png</File>
-    <File>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Roboto.spritefont</File>
-    <File>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/UI/HPBar.png</File>
-    <File>C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/unit.png</File>
+    <File>c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Entities/Projectiles/Bullet.png</File>
+    <File>c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Entities/Units/BasicChaser.png</File>
+    <File>c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/gun.png</File>
+    <File>c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Roboto.spritefont</File>
+    <File>c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/UI/HPBar.png</File>
+    <File>c:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/unit.png</File>
   </SourceFiles>
   <DestFiles>
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>
