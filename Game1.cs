@@ -63,10 +63,8 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     public static ClientServer server = new ClientServer();
     protected override void Initialize()
     {
-
-
+        DrawHelpers.init();
         this.IsFixedTimeStep = true;
-        Console.WriteLine("Game Initialized");
         camera = new Camera(new Vector2(0, 0), GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
         base.Initialize();
     }
@@ -154,19 +152,24 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     protected override void Draw(GameTime gameTime)
     {
         stopwatch.Restart();
-        GraphicsDevice.Clear(Color.CornflowerBlue);
-        _spriteBatch.Begin(transformMatrix: camera.TransformMatrix);
-        for (float i = camera.Position.X; i < camera.Position.X + camera.width; i += CollisionManager.TileSize)
+        GraphicsDevice.Clear(Color.BlanchedAlmond);
+        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, transformMatrix: camera.TransformMatrix);
+        RectangleF bounds = camera.camBounds;
+        DrawHelpers.DrawRectangle(_spriteBatch, bounds, new Color(50,50,50, 0));
+        for (float i = bounds.X; i < bounds.Right; i += CollisionManager.TileSize)
         {
-            for (float j = camera.Position.Y; j < camera.Position.Y + camera.height; j += CollisionManager.TileSize)
+            for (float j = bounds.Y; j < bounds.Bottom; j += CollisionManager.TileSize)
             {
                 Tile t = collisionManager.GetTile((int)i, (int)j);
                 if (t.Type != 0)
                 {
-                    DrawHelpers.DrawRectangle(_spriteBatch, new Rectangle((int)i, (int)j, CollisionManager.TileSize, CollisionManager.TileSize), Color.DarkKhaki);
+                    Console.WriteLine(j);
+                    DrawHelpers.DrawRectangle(_spriteBatch, new Rectangle((int)i, (int)j, CollisionManager.TileSize, CollisionManager.TileSize), random.GetRandomColor());
                 }
             }
         }
+        _spriteBatch.End();
+        _spriteBatch.Begin(transformMatrix: camera.TransformMatrix);
         foreach (Entity entity in entities)
         {
             entity.Draw(_spriteBatch);

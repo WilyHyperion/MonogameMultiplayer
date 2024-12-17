@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Input;
 using Game.Abstract;
 using Game.Helpers;
 using Game.System.Collision;
+using System.Diagnostics;
+using Game.System;
 
 namespace Game.GameSystem
 {
@@ -40,6 +42,14 @@ namespace Game.GameSystem
             {
                 return Matrix.CreateTranslation(new Vector3(-Position, 0)) *
                     Matrix.CreateScale(Zoom);
+            }
+        }
+        public RectangleF camBounds
+        {
+            get
+            {
+                Logger.Log(this.zoom.ToString());
+                return new RectangleF(Position.X, Position.Y, width, height);
             }
         }
         public int width;
@@ -123,7 +133,7 @@ namespace Game.GameSystem
 
         public void centerOnEntity(Collidable e)
         {
-            Position = new Vector2(e.Bounds.X, e.Bounds.Y) - new Vector2(width  / 2 * (1/zoom) , height  / 2 * (1/zoom));
+            Position = new Vector2(e.Bounds.X, e.Bounds.Y) - new Vector2(width / 2 * (1 / zoom), height / 2 * (1 / zoom));
         }
     }
 }

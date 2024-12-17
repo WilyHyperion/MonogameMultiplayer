@@ -8,12 +8,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 public static class DrawHelpers
 {
-   
     static Texture2D pixel = new Texture2D(UnamedGame.Instance.GraphicsDevice, 1, 1);
-
+    public static void init() {
+        pixel.SetData(new[] { Color.White });
+    }
     public static void DrawRectangleOutline(SpriteBatch spriteBatch, Rectangle rectangle, Color color)
     {
-        pixel.SetData(new[] { Color.White });
         spriteBatch.Draw(pixel, new Rectangle(rectangle.Left, rectangle.Top, rectangle.Width, 1), color);
         spriteBatch.Draw(pixel, new Rectangle(rectangle.Left, rectangle.Bottom, rectangle.Width, 1), color);
         spriteBatch.Draw(pixel, new Rectangle(rectangle.Left, rectangle.Top, 1, rectangle.Height), color);
@@ -21,8 +21,7 @@ public static class DrawHelpers
     }
     public static void DrawRectangle(SpriteBatch spriteBatch, Rectangle rectangle, Color color)
     {
-        pixel.SetData(new[] { Color.White });
-        spriteBatch.Draw(pixel, new Rectangle(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), color);
+        spriteBatch.Draw(pixel, rectangle, color);
     }
     public static Rectangle sampleAnimationFrame(Texture2D texture, int numAnimationFrames, int frameDuration, int animationTick, bool repeat = false)
     {
