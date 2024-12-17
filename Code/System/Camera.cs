@@ -48,8 +48,7 @@ namespace Game.GameSystem
         {
             get
             {
-                Logger.Log(this.zoom.ToString());
-                return new RectangleF(Position.X, Position.Y, width, height);
+                return new RectangleF(Position.X, Position.Y, (float)width * 1/Zoom, (float)height * 1/Zoom);
             }
         }
         public int width;

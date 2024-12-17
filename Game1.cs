@@ -155,16 +155,18 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         GraphicsDevice.Clear(Color.BlanchedAlmond);
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, transformMatrix: camera.TransformMatrix);
         RectangleF bounds = camera.camBounds;
-        DrawHelpers.DrawRectangle(_spriteBatch, bounds, new Color(50,50,50, 0));
-        for (float i = bounds.X; i < bounds.Right; i += CollisionManager.TileSize)
+        bounds.X -= bounds.X % CollisionManager.TileSize + CollisionManager.TileSize;
+        bounds.Y -= bounds.Y % CollisionManager.TileSize + CollisionManager.TileSize;
+        for (float i = bounds.X; i < bounds.Right + CollisionManager.TileSize; i += CollisionManager.TileSize)
         {
-            for (float j = bounds.Y; j < bounds.Bottom; j += CollisionManager.TileSize)
+            for (float j = bounds.Y; j < bounds.Bottom + CollisionManager.TileSize; j += CollisionManager.TileSize)
             {
                 Tile t = collisionManager.GetTile((int)i, (int)j);
                 if (t.Type != 0)
                 {
-                    Console.WriteLine(j);
-                    DrawHelpers.DrawRectangle(_spriteBatch, new Rectangle((int)i, (int)j, CollisionManager.TileSize, CollisionManager.TileSize), random.GetRandomColor());
+                    
+                    DrawHelpers.DrawRectangle(_spriteBatch, new Rectangle((int)i, (int)j, CollisionManager.TileSize, CollisionManager.TileSize), Color.AliceBlue);
+                    DrawHelpers.DrawRectangleOutline(_spriteBatch, new Rectangle((int)i, (int)j, CollisionManager.TileSize, CollisionManager.TileSize), Color.Chocolate);
                 }
             }
         }

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Game.Abstract;
 using Game.Helpers;
 using Microsoft.Xna.Framework.Input;
+using System.Security.Claims;
 
 
 namespace Game.System.Collision;
@@ -32,7 +33,7 @@ public class CollisionManager
     /// </summary> <summary>
     /// 
     /// </summary>
-    public const int TileSize = 300;
+    public const int TileSize = 50;
     /// <summary>
     /// Height and Width are 2x due to negative space
     /// </summary>
@@ -67,6 +68,27 @@ public class CollisionManager
         }
         return this.WorldCollision[p.X + (WorldCollision.GetLength(0) / 2), p.Y + WorldCollision.GetLength(1) / 2];
     }
+    public bool TilePosinWorld(int x, int y)
+    {
+        Point p = new Point(x, y);
+        if (p.X + (WorldCollision.GetLength(0) / 2) >= (WorldCollision.GetLength(0)))
+        {
+            return false;
+        }
+        if (p.X + (WorldCollision.GetLength(0) / 2) < 0)
+        {
+            return false;
+        }
+        if (p.Y + (WorldCollision.GetLength(1) / 2) >= (WorldCollision.GetLength(1)))
+        {
+            return false;
+        }
+        if (p.Y + (WorldCollision.GetLength(1) / 2) < 0)
+        {
+            return false;
+        }
+        return true;
+    }
     /// <summary>
     /// trunicates, not rounded
     /// </summary>
@@ -83,6 +105,10 @@ public class CollisionManager
     public void SetTile(Tile t, int worldX, int worldY)
     {
         Point p = new Point(worldX / TileSize, worldY / TileSize);
+        if (!TilePosinWorld(p.X, p.Y))
+        {
+            return;
+        }
         this.WorldCollision[p.X + (WorldCollision.GetLength(0) / 2), p.Y + WorldCollision.GetLength(1) / 2] = t;
     }
     /// <summary>
@@ -125,27 +151,38 @@ public class CollisionManager
                     if (newBounds.Intersects(tileRect))
                     {
                         Direction d = Direction.Right;
-                        if (Math.Abs(velocity.Y) < Math.Abs(velocity.X))
+                        float xDist = 0;
+                        float ydist = 0;
+                        if (bounds.Right < tileRect.Left)
                         {
-                            if (velocity.X > 0) // Moving right
-                            {
-                                d = Direction.Right;
-                            }
-                            else if (velocity.X < 0) // Moving left
-                            {
-                                d = Direction.Left;
-                            }
+                            Console.WriteLine("1");
+                            xDist = bounds.Right - tileRect.Left;
+                        }
+                        if (bounds.Left > tileRect.Right)
+                        {
+                            Console.WriteLine("2");
+                            xDist = bounds.Left - tileRect.Right;
+                        }
+                        if (bounds.Top < tileRect.Bottom)
+                        {
+                            Console.WriteLine("3");
+                            ydist = bounds.Top - tileRect.Bottom;
+                        }
+                        if (bounds.Bottom > tileRect.Top)
+                        {
+                            Console.WriteLine("4");
+                            ydist = bounds.Bottom - tileRect.Top;
+                        }
+                        Console.WriteLine($"x : {Math.Abs(xDist)}  y : {Math.Abs(ydist)}");
+                        if (Math.Abs(ydist) > Math.Abs(xDist))
+                        {
+                            Console.WriteLine("here");
+                            d = ydist > 0 ? Direction.Down : Direction.Up;
                         }
                         else
                         {
-                            if (velocity.Y > 0) // Moving down
-                            {
-                                d = Direction.Down;
-                            }
-                            else if (velocity.Y < 0) // Moving up
-                            {
-                                d = Direction.Up;
-                            }
+                            Console.WriteLine("here2");
+                            d = xDist > 0 ? Direction.Right : Direction.Left;
                         }
                         switch (d)
                         {
@@ -162,7 +199,6 @@ public class CollisionManager
                                 newBounds.Y = tileRect.Top - newBounds.Height;
                                 break;
                         }
-                        return newBounds;
                     }
                 }
             }
