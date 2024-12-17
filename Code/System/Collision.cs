@@ -147,7 +147,7 @@ public class CollisionManager
                 Tile tile = GetTile(x * TileSize, y * TileSize);
                 if (tile.Type != 0)
                 {
-                    Rectangle tileRect = new Rectangle(x * TileSize, y * TileSize, TileSize, TileSize);
+                    Rectangle tileRect = new RectangleF(x * TileSize, y * TileSize, TileSize, TileSize);
                     if (newBounds.Intersects(tileRect))
                     {
                         Direction d = Direction.Right;
@@ -156,33 +156,34 @@ public class CollisionManager
                         if (bounds.Right < tileRect.Left)
                         {
                             Console.WriteLine("1");
-                            xDist = bounds.Right - tileRect.Left;
+                            xDist =  tileRect.Left - bounds.Right;
                         }
                         if (bounds.Left > tileRect.Right)
                         {
                             Console.WriteLine("2");
                             xDist = bounds.Left - tileRect.Right;
                         }
-                        if (bounds.Top < tileRect.Bottom)
+                        Console.WriteLine($" ${bounds.Top}  {tileRect}");
+                        if (bounds.Bottom < tileRect.Top)
                         {
                             Console.WriteLine("3");
-                            ydist = bounds.Top - tileRect.Bottom;
+                            ydist = bounds.Bottom - tileRect.Top;
+                            Console.WriteLine(ydist);
                         }
-                        if (bounds.Bottom > tileRect.Top)
+                        if (bounds.Top > tileRect.Bottom)
                         {
                             Console.WriteLine("4");
-                            ydist = bounds.Bottom - tileRect.Top;
+                            ydist = tileRect.Bottom - bounds.Top;
+                            Console.WriteLine(ydist);
                         }
                         Console.WriteLine($"x : {Math.Abs(xDist)}  y : {Math.Abs(ydist)}");
                         if (Math.Abs(ydist) > Math.Abs(xDist))
                         {
-                            Console.WriteLine("here");
-                            d = ydist > 0 ? Direction.Down : Direction.Up;
+                            d =  ydist > 0 ? Direction.Down : Direction.Up ;
                         }
                         else
                         {
-                            Console.WriteLine("here2");
-                            d = xDist > 0 ? Direction.Right : Direction.Left;
+
                         }
                         switch (d)
                         {
