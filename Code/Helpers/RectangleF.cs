@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework;
 namespace Game.Helpers;
 
 public class RectangleF {
+    public RectangleF Copy(){
+        return new RectangleF(this.x, this.y, this.Width, this.Height);
+    }
     public override int GetHashCode()
         {
             unchecked // Overflow is fine, just wrap
@@ -163,7 +166,7 @@ public class RectangleF {
     }
     public override string ToString()
     {
-        return $"X: {x}, Y: {y}, Width: {Width}, Height: {Height}";
+        return $"X: {x}, Y: {y}, Width: {Width}, Height: {Height}   tOP: {Top}  Bottom: {Bottom}  Left: {Left}  Right: {Right}";
     }
     public override bool Equals(object obj)
     {

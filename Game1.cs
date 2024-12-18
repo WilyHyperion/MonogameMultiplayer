@@ -164,9 +164,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
                 Tile t = collisionManager.GetTile((int)i, (int)j);
                 if (t.Type != 0)
                 {
-                    
-                    DrawHelpers.DrawRectangle(_spriteBatch, new Rectangle((int)i, (int)j, CollisionManager.TileSize, CollisionManager.TileSize), Color.AliceBlue);
-                    DrawHelpers.DrawRectangleOutline(_spriteBatch, new Rectangle((int)i, (int)j, CollisionManager.TileSize, CollisionManager.TileSize), Color.Chocolate);
+                    DrawHelpers.DrawRectangle(_spriteBatch, new Rectangle((int)i, (int)j, CollisionManager.TileSize, CollisionManager.TileSize), random.GetRandomColor());
                 }
             }
         }

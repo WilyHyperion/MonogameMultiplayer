@@ -15,7 +15,8 @@ public enum Direction
     Right,
     Left,
     Up,
-    Down
+    Down,
+    None
 }
 public struct Tile
 {
@@ -132,7 +133,7 @@ public class CollisionManager
 
     public RectangleF moveRect(RectangleF bounds, Vector2 velocity)
     {
-        RectangleF newBounds = bounds;
+        RectangleF newBounds = bounds.Copy();
         newBounds.X += velocity.X;
         newBounds.Y += velocity.Y;
         //check worldcollision tiles
@@ -147,57 +148,59 @@ public class CollisionManager
                 Tile tile = GetTile(x * TileSize, y * TileSize);
                 if (tile.Type != 0)
                 {
-                    Rectangle tileRect = new RectangleF(x * TileSize, y * TileSize, TileSize, TileSize);
+                    RectangleF tileRect = new RectangleF(x * TileSize, y * TileSize, TileSize, TileSize);
                     if (newBounds.Intersects(tileRect))
                     {
-                        Direction d = Direction.Right;
+                        Direction dx = Direction.Right;
+                        Direction dy = Direction.Up;
                         float xDist = 0;
                         float ydist = 0;
-                        if (bounds.Right < tileRect.Left)
+                        if (bounds.Right <= tileRect.Left)
                         {
-                            Console.WriteLine("1");
-                            xDist =  tileRect.Left - bounds.Right;
+                            xDist = tileRect.Left - bounds.Right;
+                            dx = Direction.Right;
                         }
-                        if (bounds.Left > tileRect.Right)
+                        if (bounds.Left >= tileRect.Right)
                         {
-                            Console.WriteLine("2");
-                            xDist = bounds.Left - tileRect.Right;
+                            xDist = tileRect.Right - bounds.Left;
+                            dx = Direction.Left;
                         }
-                        Console.WriteLine($" ${bounds.Top}  {tileRect}");
-                        if (bounds.Bottom < tileRect.Top)
+                        if (bounds.Bottom <= tileRect.Top)
                         {
-                            Console.WriteLine("3");
-                            ydist = bounds.Bottom - tileRect.Top;
-                            Console.WriteLine(ydist);
+                            dy = Direction.Down;
+                            ydist = tileRect.Top - bounds.Bottom;
                         }
-                        if (bounds.Top > tileRect.Bottom)
+                        if (bounds.Top >= tileRect.Bottom)
                         {
-                            Console.WriteLine("4");
+                            dy = Direction.Up;
                             ydist = tileRect.Bottom - bounds.Top;
-                            Console.WriteLine(ydist);
                         }
-                        Console.WriteLine($"x : {Math.Abs(xDist)}  y : {Math.Abs(ydist)}");
+                        Direction d;
                         if (Math.Abs(ydist) > Math.Abs(xDist))
                         {
-                            d =  ydist > 0 ? Direction.Down : Direction.Up ;
+                            d = dy;
+                        }
+                        else if (Math.Abs(ydist) < Math.Abs(xDist))
+                        {
+                            d = dx;
                         }
                         else
                         {
-
+                            d = Direction.None;
                         }
                         switch (d)
                         {
-                            case Direction.Right:
-                                newBounds.X = tileRect.Left - newBounds.Width;
-                                break;
                             case Direction.Left:
-                                newBounds.X = tileRect.Right;
+                                newBounds.Left = tileRect.Right + 1;
+                                break;
+                            case Direction.Right:
+                                newBounds.Right = tileRect.Left - 1;
+                                break;
+                            case Direction.Down:
+                                newBounds.Bottom = tileRect.Top - 1;
                                 break;
                             case Direction.Up:
-                                newBounds.Y = tileRect.Bottom;
-                                break;
-                            default:
-                                newBounds.Y = tileRect.Top - newBounds.Height;
+                                newBounds.Top = tileRect.Bottom +1;
                                 break;
                         }
                     }

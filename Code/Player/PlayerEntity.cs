@@ -41,7 +41,7 @@ public class PlayerEntity : SoildEntity
         UIManager.AddLow(new HPBar());
 
     }
-    public float Speed = 2f;
+    public float Speed = 400f;
     PlayerInput input;
     public override void Update()
     {
