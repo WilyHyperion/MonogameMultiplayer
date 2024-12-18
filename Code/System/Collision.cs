@@ -34,7 +34,7 @@ public class CollisionManager
     /// </summary> <summary>
     /// 
     /// </summary>
-    public const int TileSize = 50;
+    public const int TileSize = 16;
     /// <summary>
     /// Height and Width are 2x due to negative space
     /// </summary>

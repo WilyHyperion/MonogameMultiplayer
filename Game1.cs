@@ -33,6 +33,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     {
         return this.camera.ScreenToWorld(new Vector2(Mouse.GetState().X, Mouse.GetState().Y));
     }
+    
     public int GameTick;
     public CollisionManager collisionManager = new CollisionManager(1000, 1000);
     public static Random random = new Random();
@@ -48,7 +49,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     internal float updateTime;
     internal float drawTime;
     Stopwatch stopwatch = new Stopwatch();
-
+    public ClientServer clientServer;
 
     public UnamedGame()
     {
@@ -59,6 +60,8 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         IsMouseVisible = true;
         Instance = this;
         new Server.Server();
+        clientServer = new ClientServer();
+        clientServer.init();
     }
     public static ClientServer server = new ClientServer();
     protected override void Initialize()
@@ -98,6 +101,8 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
             SpawnEntity(player);
             server.Send(new Connect());
         }
+
+        ClientServer.RunPackets();
         camera.Update();
         stopwatch.Restart();
         GameTick++;
