@@ -10,6 +10,7 @@ using Game.Abstract;
 using Game.Player;
 using Game.System.Collision;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Server.Packets.ServerSided;
 
 namespace Server
 {
@@ -31,21 +32,37 @@ namespace Server
             PacketTypes.RegisterPacketTypes();
 
         }
-        const int port = 8080;
-        public async void SendReSyncPackets(){
-            await Task.Delay(1000/60);
+        public const int port = 8080;
+        public async void SendReSyncPackets()
+        {
+            while (true)
+            {
+                await Task.Delay(1000);
+                ResyncAllClients();
+            }
         }
+        public void ResyncAllClients()
+        {
+
+            for (int i = 0; i < connected.Keys.Count; i++)
+            {
+                var endpoint = connected.Keys.ElementAt(i);
+                byte[] response = new ReSyncPacket().Send();
+                Console.WriteLine($"syncing Clients {response}   {endpoint} from {listener}");
+                listener.SendAsync(response, response.Length, endpoint);
+            }
+        }
+        UdpClient listener = new UdpClient(port);
         public async void Start()
         {
             Console.WriteLine("running startup");
-            UdpClient listener = new UdpClient(port);
-            IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, port);
             Console.WriteLine("Server started");
             try
             {
-                await Task.Run(() => {SendReSyncPackets();});
+                await Task.Run(() => { SendReSyncPackets(); });
                 while (true)
                 {
+                    IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, port);
                     Console.WriteLine("Waiting for broadcast");
                     byte[] bytes = listener.Receive(ref groupEP);
                     Console.WriteLine("Received broadcast from {0} :\n {1}\n", groupEP.ToString(), bytes.Length);
@@ -70,11 +87,14 @@ namespace Server
                 object oo = Activator.CreateInstance(p, [packet.Skip(1).ToArray(), from]);
                 if (oo is ClientOrigniatingPacket clientpacket)
                 {
+                    Console.WriteLine("rann");
                     if (connected.TryGetValue(from, out ServerPlayer player))
                     {
+                        Console.WriteLine("3");
                         clientpacket.ServerReceive(player);
                     }
-                    else {
+                    else
+                    {
                         ServerPlayer serverPlayer = new ServerPlayer(new PlayerEntity(), from);
                         connected.Add(from, serverPlayer);
                         clientpacket.ServerReceive(serverPlayer);

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Server;
 using Server.Packets;
@@ -13,29 +14,56 @@ namespace Game.GameSystem.Networking;
 
 public class ClientServer
 {
-    public static void RunPackets(){
-        for(int i = 0; i < packetsToRun.Count; i++){
+    public static void RunPackets()
+    {
+        for (int i = 0; i < packetsToRun.Count; i++)
+        {
             packetsToRun[i].ClientReceive();
         }
         packetsToRun.Clear();
     }
     public static List<ServerOriginatingPacket> packetsToRun = new List<ServerOriginatingPacket>();
-    static IPEndPoint ep = new IPEndPoint(IPAddress.Any, 0);
     UdpClient client = new UdpClient();
     public ClientServer()
     {
-        client.Connect(Server.Server.ServerURL, 8080);
+        Console.WriteLine("Client started");
+        client.Connect(Server.Server.ServerURL, Server.Server.port);
     }
-    public void ListenForPackets()
+    public async void ListenForPackets()
     {
         while (true)
         {
-            byte[] data = client.Receive(ref ep);
-            if (PacketTypes.PacketTypeReverse.TryGetValue(data[0], out Type p))
+            try
             {
-                Console.WriteLine(p);
-                ServerOriginatingPacket packet = (ServerOriginatingPacket)Activator.CreateInstance(p, [data.Skip(1)]);
-                packetsToRun.Add(packet);
+                Console.WriteLine($"listening on {client.Client.LocalEndPoint}");
+                UdpReceiveResult result = await client.ReceiveAsync();
+                byte[] data = result.Buffer;
+                Console.WriteLine("received");
+                Console.WriteLine(data[0]);
+                Console.WriteLine(PacketTypes.PacketTypeReverse);
+                if (PacketTypes.PacketTypeReverse.TryGetValue(data[0], out Type p))
+                {
+                    ServerOriginatingPacket packet = (ServerOriginatingPacket)Activator.CreateInstance(p, [data.Skip(1).ToArray()]);
+                    packetsToRun.Add(packet);
+                }
+            }
+            catch (SocketException ex)
+            {
+                if (ex.SocketErrorCode == SocketError.TimedOut)
+                {
+                    Console.WriteLine("Receive timed out");
+                    continue; // Continue listening for packets
+                }
+                else
+                {
+                    Console.WriteLine($"SocketException: {ex.Message}");
+                    break; // Exit the loop on other socket errors
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                break; // Exit the loop on other exceptions
             }
         }
     }

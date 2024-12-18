@@ -46,6 +46,13 @@ public class PlayerEntity : SoildEntity
     {
     }
 
+    public PlayerEntity(string name, RectangleF bounds, int maxHP)
+    {
+        this.name = name;
+        this.Bounds = bounds;
+        this.maxHP = maxHP;
+    }
+
     public float Speed = 15f;
     PlayerInput input;
     public override void Update()

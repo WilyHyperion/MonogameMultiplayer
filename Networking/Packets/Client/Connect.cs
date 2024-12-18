@@ -49,19 +49,8 @@ public class Connect : ClientOrigniatingPacket
             p.Bounds = bounds;
             p.name = b.ReadString();
             sender.player = p;
+
             b.Dispose();
         }
-    }
-}
-public class ConnectRecive : ServerOriginatingPacket
-{
-    public override void ClientReceive()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override byte[] Send()
-    {
-        throw new NotImplementedException();
     }
 }

@@ -49,7 +49,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     internal float updateTime;
     internal float drawTime;
     Stopwatch stopwatch = new Stopwatch();
-    public ClientServer clientServer;
+    public ClientServer server;
 
     public UnamedGame()
     {
@@ -59,11 +59,9 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
         Instance = this;
-        new Server.Server();
-        clientServer = new ClientServer();
-        clientServer.init();
+        server = new ClientServer();
+        server.init();
     }
-    public static ClientServer server = new ClientServer();
     protected override void Initialize()
     {
         DrawHelpers.init();

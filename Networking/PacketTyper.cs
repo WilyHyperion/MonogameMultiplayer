@@ -16,7 +16,7 @@ public static class PacketTypes {
     public static void RegisterPacketTypes() {
         var types = Server.Server.Instance.GetType().Assembly.GetTypes();
         foreach(var type in types) {
-            if(type.IsSubclassOf(typeof(Packet))){
+            if(type.IsSubclassOf(typeof(Packet) ) && !type.IsAbstract){
                 RegisterPacketType(type);
             }
         }

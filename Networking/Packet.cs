@@ -35,7 +35,19 @@ public abstract class Packet
 /// Represents a packet that gets sent from the server to the clients
 /// </summary>
 public abstract class ServerOriginatingPacket : Packet{
-        /// <summary>
+    public ServerOriginatingPacket()
+    {
+    }
+
+    public ServerOriginatingPacket(byte[] data) : base(data)
+    {
+    }
+
+    public ServerOriginatingPacket(byte[] data, IPEndPoint from) : base(data, from)
+    {
+    }
+
+    /// <summary>
     /// code that runs on the server when this packet is sent, assume data is set
     /// </summary>
     public abstract void  ClientReceive();
@@ -45,15 +57,15 @@ public abstract class ServerOriginatingPacket : Packet{
 /// A packet sent from the clients to the server
 /// </summary>
 public abstract class ClientOrigniatingPacket : Packet {
-    protected ClientOrigniatingPacket()
+    public ClientOrigniatingPacket()
     {
     }
 
-    protected ClientOrigniatingPacket(byte[] data) : base(data)
+    public ClientOrigniatingPacket(byte[] data) : base(data)
     {
     }
 
-    protected ClientOrigniatingPacket(byte[] data, IPEndPoint from) : base(data, from)
+    public ClientOrigniatingPacket(byte[] data, IPEndPoint from) : base(data, from)
     {
     }
 
