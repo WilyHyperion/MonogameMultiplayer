@@ -39,11 +39,12 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     {
         if (ConnectedPlayers.ContainsKey(p.ID))
         {
+            Console.WriteLine("Resyncing active player");
             ConnectedPlayers[p.ID].player = p;
         }
         else
         {
-            Console.WriteLine("new plaer join");
+            Console.WriteLine("new player join");
             ConnectedPlayers.Add(p.ID, new GamePlayer(p.ID, p, false));
         }
 
@@ -142,8 +143,6 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
             this.collisionManager.SetTile(new Tile(1), MouseWorldPos());
         }
         base.Update(gameTime);
-        
-       
         List<Entity> all = GetEntities();
         for (int i = 0; i < all.Count; i++)
         {

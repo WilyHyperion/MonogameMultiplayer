@@ -76,10 +76,3 @@ public abstract class ClientOrigniatingPacket : Packet {
 
     }
 }
-public class FillerPacket : ClientOrigniatingPacket
-{
-    public override byte[] Send()
-    {
-        throw new NotImplementedException();
-    }
-}

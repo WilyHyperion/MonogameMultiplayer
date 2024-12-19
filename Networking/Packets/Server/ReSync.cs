@@ -37,11 +37,11 @@ namespace Server.Packets.ServerSided
                     for (int i = 0; i < amount; i++)
                     {
                          PlayerEntity p = b.ReadPlayer();
-                         Console.WriteLine(p.ID + "_" + UnamedGame.Instance.MyID);
                          if(p.ID == UnamedGame.Instance.MyID){
-                            //TODO handle server desync
+                            Console.WriteLine("self player, checking desync");
                          }
                          else {
+                            Console.WriteLine("Resyncing remote player");
                             UnamedGame.Instance.ReSyncPlayer(p);
                          }
                     }

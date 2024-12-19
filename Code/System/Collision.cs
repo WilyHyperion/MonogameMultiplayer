@@ -218,7 +218,7 @@ public abstract class Collidable : Entity
     public bool ShouldCheckCollisions = true;
     public Node node;
     public GridSystem gridSystem;
-    RectangleF _bounds = new RectangleF();
+    protected RectangleF _bounds = new RectangleF();
     public RectangleF OldBounds { get; set; }
     public RectangleF Bounds
     {
@@ -262,6 +262,10 @@ public abstract class Collidable : Entity
         get
         {
             return new Vector2(Bounds.X, Bounds.Y);
+        }
+        set {
+            this.Bounds.X = value.X;
+            this.Bounds.Y = value.Y;
         }
     }
 }

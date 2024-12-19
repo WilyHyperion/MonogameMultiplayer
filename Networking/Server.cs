@@ -25,6 +25,14 @@ namespace Server
             var obj = Activator.CreateInstance(typeof(T));
             SendPacket((ServerOriginatingPacket)obj, ip);
         }
+        public static void Dispatch(ServerOriginatingPacket p){
+            byte[] data = p.Send();
+            byte typer = PacketTypes.GetPacketType(p);
+            byte[] res = new byte[] { typer }.Concat(data).ToArray();
+            for(int i = 0; i < Instance.connected.Count; i++){
+                Instance.listener.Send(res, Instance.connected.Keys.ElementAt(i));
+            }
+        }
         public static void SendPacket(ServerOriginatingPacket p, IPEndPoint ip)
         {
             byte[] data = p.Send();

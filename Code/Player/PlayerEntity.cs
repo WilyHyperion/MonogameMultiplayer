@@ -99,7 +99,7 @@ public class PlayerEntity : SoildEntity
             }
             if (UnamedGame.Instance.GameTick % 2 == 0)
             {
-                
+                UnamedGame.Instance.server.Send(new PlayerMove());
             }
         }
     }

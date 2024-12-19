@@ -58,7 +58,7 @@ public static class Debug
             {
                  output += $"{key.Key}:{key.Value.ToString()}\n";
             }
-                s.DrawString(f,output , new Vector2(c.Bounds.Left, c.Bounds.Top + draws.Count* -20) , Color.Beige );
+                s.DrawString(f,output , new Vector2(c.Bounds.Left, c.Bounds.Top + draws.Count* -20) , Color.Black );
         }
 
     }
