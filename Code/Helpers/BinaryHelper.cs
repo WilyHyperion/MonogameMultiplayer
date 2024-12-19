@@ -20,6 +20,7 @@ public static class BinaryHelpers {
         bw.Write(p.name);
         bw.Write(p.Bounds);
         bw.Write(p.maxHP);
+        bw.Write(p.ID);
     }
     public static PlayerEntity ReadPlayer(this BinaryReader b) {
         string name = b.ReadString();
@@ -27,6 +28,7 @@ public static class BinaryHelpers {
         int maxHP = b.ReadInt32();
         PlayerEntity p = new PlayerEntity(name, bounds, maxHP);
         p.remote = true;
+        p.ID = b.ReadInt32();
         return p;
     }
 }

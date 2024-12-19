@@ -10,6 +10,7 @@ using Game.Abstract;
 using Game.Player;
 using Game.System.Collision;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Server.Packets;
 using Server.Packets.ServerSided;
 
 namespace Server
@@ -19,17 +20,23 @@ namespace Server
         public List<Entity> entities = new List<Entity>();
         public CollisionManager collisionManager = new CollisionManager(5000, 5000);
         public const String ServerURL = "localhost";
-        public static void SendPacket<T>() where T : Packet
+        public static void SendPacket<T>(IPEndPoint ip) where T : ServerOriginatingPacket
         {
             var obj = Activator.CreateInstance(typeof(T));
-            byte[] b = ((Packet)obj).Send();
+            SendPacket((ServerOriginatingPacket)obj, ip);
+        }
+        public static void SendPacket(ServerOriginatingPacket p, IPEndPoint ip)
+        {
+            byte[] data = p.Send();
+            byte typer = PacketTypes.GetPacketType(p);
+            byte[] res = new byte[] { typer }.Concat(data).ToArray();
+            Instance.listener.Send(res, res.Length, ip);
         }
         public Dictionary<IPEndPoint, ServerPlayer> connected = new Dictionary<IPEndPoint, ServerPlayer>();
         public static Server Instance;
         public Server()
         {
             Instance = this;
-            PacketTypes.RegisterPacketTypes();
 
         }
         public const int port = 8080;
@@ -47,9 +54,7 @@ namespace Server
             for (int i = 0; i < connected.Keys.Count; i++)
             {
                 var endpoint = connected.Keys.ElementAt(i);
-                byte[] response = new ReSyncPacket().Send();
-                Console.WriteLine($"syncing Clients {response}   {endpoint} from {listener}");
-                listener.SendAsync(response, response.Length, endpoint);
+                Server.SendPacket<ReSyncPacket>(endpoint);
             }
         }
         UdpClient listener = new UdpClient(port);
@@ -87,17 +92,20 @@ namespace Server
                 object oo = Activator.CreateInstance(p, [packet.Skip(1).ToArray(), from]);
                 if (oo is ClientOrigniatingPacket clientpacket)
                 {
-                    Console.WriteLine("rann");
                     if (connected.TryGetValue(from, out ServerPlayer player))
                     {
-                        Console.WriteLine("3");
                         clientpacket.ServerReceive(player);
                     }
                     else
                     {
+
                         ServerPlayer serverPlayer = new ServerPlayer(new PlayerEntity(), from);
                         connected.Add(from, serverPlayer);
+                        serverPlayer.id = connected.Count - 1;
                         clientpacket.ServerReceive(serverPlayer);
+                        ConnectRecive connect = new ConnectRecive();
+                        connect.ID = (byte)serverPlayer.id;
+                        Server.SendPacket(connect, from);
                     }
                 }
             }
@@ -110,11 +118,20 @@ namespace Server
 
     public class ServerPlayer
     {
+        public int id{
+            get{
+                return player.ID;
+            }
+            set {
+                player.ID = value;
+            }
+        }
         public PlayerEntity player;
         public IPEndPoint IP;
         public ServerPlayer(PlayerEntity p, IPEndPoint from)
         {
             this.player = p;
+            
             this.IP = from;
         }
     }

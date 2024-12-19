@@ -24,7 +24,7 @@ foreach(string arg in args){
     }
 }
    if(server){
-Task.Run(() => StartServer());
+await Task.Run(() => StartServer());
 }
 
 StartGame();

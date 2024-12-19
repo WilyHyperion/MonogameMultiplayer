@@ -110,7 +110,6 @@ public abstract class Unit : SoildEntity
                 }
                 else
                 {
-                    Console.WriteLine("Found ally");
                     float dist = (this.Bounds.Middle - u.Bounds.Middle).LengthSquared();
                     if (nearist > dist)
                     {

@@ -15,7 +15,7 @@ namespace Game.Abstract
         public int ID;
         public Vector2 Velocity;
         public bool Active = true;
-        public int whoAmi;
+        public int whoAmi = -1;
         public virtual void Update() {
             
         }

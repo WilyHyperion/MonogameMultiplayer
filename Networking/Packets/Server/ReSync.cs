@@ -29,13 +29,22 @@ namespace Server.Packets.ServerSided
             using (MemoryStream ms = new MemoryStream())
             {
                 ms.Write(data);
-                ms.Position = 0;
-                BinaryReader b = new BinaryReader(ms);
-                int amount  = b.ReadInt32();
-                Console.WriteLine(amount);
-                for(int i = 0; i < amount; i++){
-                    PlayerEntity p = b.ReadPlayer();
-                    UnamedGame.Instance.entities.Add(p);
+
+                using (BinaryReader b = new BinaryReader(ms))
+                {
+                    b.BaseStream.Seek(0, SeekOrigin.Begin);
+                    int amount = b.ReadInt32();
+                    for (int i = 0; i < amount; i++)
+                    {
+                         PlayerEntity p = b.ReadPlayer();
+                         Console.WriteLine(p.ID + "_" + UnamedGame.Instance.MyID);
+                         if(p.ID == UnamedGame.Instance.MyID){
+                            //TODO handle server desync
+                         }
+                         else {
+                            UnamedGame.Instance.ReSyncPlayer(p);
+                         }
+                    }
                 }
             }
         }
@@ -47,7 +56,7 @@ namespace Server.Packets.ServerSided
                 using (var writer = new BinaryWriter(ms))
                 {
                     Server s = Server.Instance;
-                    writer.Write(s.connected.Count);
+                    writer.Write((int)s.connected.Count);
                     for (int i = 0; i < s.connected.Count; i++)
                     {
                         writer.Write(s.connected.Values.ElementAt(i).player);

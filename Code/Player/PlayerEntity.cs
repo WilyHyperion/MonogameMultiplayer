@@ -57,8 +57,9 @@ public class PlayerEntity : SoildEntity
     PlayerInput input;
     public override void Update()
     {
-        if (true)//(!remote)
+        if (!remote)
         {
+
             input = new PlayerInput();
 
             Vector2 addition = Vector2.Zero;
@@ -96,6 +97,10 @@ public class PlayerEntity : SoildEntity
             {
                 animationTick++;
             }
+            if (UnamedGame.Instance.GameTick % 2 == 0)
+            {
+                
+            }
         }
     }
     public float Friction = 0.1f;
@@ -106,10 +111,17 @@ public class PlayerEntity : SoildEntity
     int animationTick = -1;
     public override void Draw(SpriteBatch spriteBatch)
     {
-        Helpers.DrawHelpers.DrawRectangle(spriteBatch, OldBounds, Color.White);
-        var mousepos = UnamedGame.Instance.camera.ScreenToWorld(new Vector2(input.MouseState.X, input.MouseState.Y));
-        var direction = mousepos - this.Position;
-        var rotation = (float)Math.Atan2(direction.Y + 0.0f, direction.X + 0.0f) + MathHelper.ToRadians(90f);
+        float rotation;
+        if (!this.remote)
+        {
+            var mousepos = UnamedGame.Instance.camera.ScreenToWorld(new Vector2(input.MouseState.X, input.MouseState.Y));
+            var direction = mousepos - this.Position;
+            rotation = (float)Math.Atan2(direction.Y + 0.0f, direction.X + 0.0f) + MathHelper.ToRadians(90f);
+        }
+        else
+        {
+            rotation = 1f;
+        }
         spriteBatch.Draw(Texture, Position + new Vector2(Bounds.Width / 2, Bounds.Height / 2), null, Color.White, rotation, new Vector2(Bounds.Width / 2, Bounds.Height / 2), 1.0f, SpriteEffects.None, 0.0f);
         Vector2 gunOffset = new Vector2(Texture.Width, Texture.Height) * 0.5f;
         gunOffset.Rotate(rotation - MathHelper.ToRadians(90f));

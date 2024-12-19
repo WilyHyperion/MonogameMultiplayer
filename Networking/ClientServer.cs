@@ -26,7 +26,6 @@ public class ClientServer
     UdpClient client = new UdpClient();
     public ClientServer()
     {
-        Console.WriteLine("Client started");
         client.Connect(Server.Server.ServerURL, Server.Server.port);
     }
     public async void ListenForPackets()
@@ -35,12 +34,9 @@ public class ClientServer
         {
             try
             {
-                Console.WriteLine($"listening on {client.Client.LocalEndPoint}");
+                Console.WriteLine($"listening on {client.Client.LocalEndPoint}, connecting to {Server.Server.ServerURL}  : {Server.Server.port}");
                 UdpReceiveResult result = await client.ReceiveAsync();
                 byte[] data = result.Buffer;
-                Console.WriteLine("received");
-                Console.WriteLine(data[0]);
-                Console.WriteLine(PacketTypes.PacketTypeReverse);
                 if (PacketTypes.PacketTypeReverse.TryGetValue(data[0], out Type p))
                 {
                     ServerOriginatingPacket packet = (ServerOriginatingPacket)Activator.CreateInstance(p, [data.Skip(1).ToArray()]);
@@ -70,6 +66,8 @@ public class ClientServer
 
     public async void init()
     {
+
+        PacketTypes.RegisterPacketTypes();
         await Task.Run(ListenForPackets);
     }
 
@@ -80,7 +78,12 @@ public class ClientServer
         {
             byte[] data = [v];
             data = data.Concat(packet.Send()).ToArray();
+            Console.WriteLine("sending data" + data.Length);
             client.Send(data);
+        }
+        else
+        {
+            Console.WriteLine("failed to send packet - invaild or unregistered type");
         }
     }
 
