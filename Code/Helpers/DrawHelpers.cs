@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 public static class DrawHelpers
 {
-    static Texture2D pixel = new Texture2D(UnamedGame.Instance.GraphicsDevice, 1, 1);
+    static Texture2D pixel = new(UnamedGame.Instance.GraphicsDevice, 1, 1);
     public static void init() {
         pixel.SetData(new[] { Color.White });
     }

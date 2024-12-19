@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 
 namespace Game.Helpers;
@@ -20,11 +21,11 @@ public class RectangleF {
         }
     public Vector2 Middle {
         get{
-            return new Vector2(X + (Width/2), Y + (Height/2));
+            return new Vector2(X + (Width/2), Y - (Height/2));
         }
     }public Vector2 Center {
         get{
-            return new Vector2(X + (Width/2), Y + (Height/2));
+            return new Vector2(X + (Width/2), Y -(Height/2));
         }
     }
 
@@ -161,9 +162,7 @@ public class RectangleF {
     public static implicit operator RectangleF(Rectangle r){
         return new RectangleF(r.X, r.Y, r.Width, r.Height);
     }
-    public static implicit operator Rectangle(RectangleF r){
-        return new Rectangle((int)r.X, (int)r.Y, (int)r.Width, (int)r.Height);
-    }
+    
     public override string ToString()
     {
         return $"X: {x}, Y: {y}, Width: {Width}, Height: {Height}   tOP: {Top}  Bottom: {Bottom}  Left: {Left}  Right: {Right}";
@@ -176,5 +175,9 @@ public class RectangleF {
         }
         return false;
     }
-    
+
+    public Rectangle ToRectangle()
+    {
+        return new Rectangle((int)x, (int)y, (int)Width, (int)Height);
+    }
 }

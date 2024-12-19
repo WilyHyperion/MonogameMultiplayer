@@ -11,24 +11,33 @@ using Microsoft.Xna.Framework;
 
 
 
-void StartGame(){
+
+void StartGame()
+{
     var game = new Game.UnamedGame();
     game.Run();
 }
-void StartServer(){
+async Task StartServer()
+{
     var server = new Server.Server();
-    server.Start();
+    await server.Start();
+    Console.WriteLine("Server finished");
 }
 
 
 bool server = false;
-foreach(string arg in args){
-    if(arg == "server"){
+foreach (string arg in args)
+{
+    if (arg == "server")
+    {
         server = true;
     }
 }
-   if(server){
-await Task.Run(() => StartServer());
+if (server)
+{
+    await StartServer();
 }
-
-StartGame();
+else
+{
+    StartGame();
+}

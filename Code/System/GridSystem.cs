@@ -36,10 +36,10 @@ public class GridSystem {
         return new Vector2((int)(position.X / GridSize), (int)(position.Y / GridSize));
     }
     //x, y, elements in that gird location
-    public Dictionary<int, Dictionary<int, List<Node>>> Grid = new Dictionary<int, Dictionary<int, List<Node>>>();
+    public Dictionary<int, Dictionary<int, List<Node>>> Grid = new();
 
     public void AddNode(Node node){
-        Vector2 gridPosition = GetGridPosition(new Vector2(node.bounds.X + node.bounds.Width/2, node.bounds.Y + node.bounds.Height/2));
+        Vector2 gridPosition = GetGridPosition(new Vector2(node.bounds.X + node.bounds.Width/2, node.bounds.Y - node.bounds.Height/2));
         if(!Grid.ContainsKey((int)gridPosition.X)){
             Grid[(int)gridPosition.X] = new Dictionary<int, List<Node>>();
         }
@@ -64,7 +64,7 @@ public class GridSystem {
     }
     public List<Node> GetNodesWithin(Vector2 worldPos, float dist){
         Vector2 gridPosition = GetGridPosition(worldPos);
-        List<Node> nodes = new List<Node>();
+        List<Node> nodes = new();
         int searchAmount = (int)Math.Ceiling(dist/GridSize)/2;
         for(int x = -searchAmount; x <  searchAmount; x++){
             for(int y = -searchAmount; y < searchAmount; y++){
@@ -77,7 +77,7 @@ public class GridSystem {
     }
     public List<Node> GetNodesInAndAround(Vector2 worldPos){
         Vector2 gridPosition = GetGridPosition(worldPos);
-        List<Node> nodes = new List<Node>();
+        List<Node> nodes = new();
         for(int x = -1; x < 2; x++){
             for(int y = -1; y < 2; y++){
                 if(Grid.ContainsKey((int)gridPosition.X + x) && Grid[(int)gridPosition.X + x].ContainsKey((int)gridPosition.Y + y)){
@@ -89,14 +89,14 @@ public class GridSystem {
     }
     public List<Node> GetNodesIn(Vector2 worldPos){
         Vector2 gridPosition = GetGridPosition(worldPos);
-        List<Node> nodes = new List<Node>();
+        List<Node> nodes = new();
         if(Grid.ContainsKey((int)gridPosition.X) && Grid[(int)gridPosition.X].ContainsKey((int)gridPosition.Y)){
             nodes.AddRange(Grid[(int)gridPosition.X][(int)gridPosition.Y]);
         }
         return nodes;
     }
     public List<Node> GetCollisions(RectangleF bounds){
-        List<Node> nodes = new List<Node>();
+        List<Node> nodes = new();
         Vector2 gridPosition = GetGridPosition(new Vector2(bounds.X, bounds.Y));
         int num = 0;
         for(int x = -1; x < 2; x++){

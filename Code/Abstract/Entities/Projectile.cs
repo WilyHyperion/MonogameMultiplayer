@@ -39,7 +39,7 @@ public abstract class Projectile : Collidable
         return NewProjectile<T>(pos, Vector2.Zero);
     }
 
-    public static Dictionary<Type, StaticInformation> unitTypes = new Dictionary<Type, StaticInformation>();
+    public static Dictionary<Type, StaticInformation> unitTypes = new();
 
     public Texture2D Texture
     {
@@ -92,7 +92,7 @@ public abstract class Projectile : Collidable
     public override void Draw(SpriteBatch spriteBatch)
     {
         if(RotateToVelocity){
-            spriteBatch.Draw(this.Texture, this.Bounds, null, this.team.TeamColor, this.Velocity.ToRotation() + this.RotationOffset, new Vector2(Bounds.Width / 2, Bounds.Height / 2) , SpriteEffects.None, 0f );
+            spriteBatch.Draw(this.Texture, this.Bounds.ToRectangle(), null, this.team.TeamColor, this.Velocity.ToRotation() + this.RotationOffset, new Vector2(Bounds.Width / 2, Bounds.Height / 2) , SpriteEffects.None, 0f );
         }
         else{
         spriteBatch.Draw(this.Texture, this.Position, this.team.TeamColor);

@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using Game.Player;
+using Game.System.Collision;
 using Microsoft.Xna.Framework;
 
 namespace Game.Helpers;
@@ -35,12 +36,13 @@ public static class BinaryHelpers {
         bw.Write(p.ID);
         BinaryHelpers.Write(bw, p.Velocity);
     }
-    public static PlayerEntity ReadPlayer(this BinaryReader b) {
+    public static PlayerEntity ReadPlayer(this BinaryReader b, CollisionManager cm){ {
         string name = b.ReadString();
         RectangleF bounds = b.ReadRectangleF();
         int maxHP = b.ReadInt32();
-        PlayerEntity p = new PlayerEntity(name, bounds, maxHP);
+        PlayerEntity p = new(name, cm,bounds, maxHP);
         p.ID = b.ReadInt32();
         return p;
     }
+}
 }

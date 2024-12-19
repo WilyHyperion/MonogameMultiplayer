@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Game;
 using Game.Abstract;
 using Game.Player;
 using Game.System.Collision;
@@ -17,9 +19,10 @@ namespace Server
 {
     public class Server
     {
-        public List<Entity> entities = new List<Entity>();
-        public CollisionManager collisionManager = new CollisionManager(5000, 5000);
-        public const String ServerURL = "localhost";
+        public UnamedGame game = new();
+        public List<Entity> entities = new();
+        public CollisionManager collisionManager = new(5000, 5000);
+        public const string ServerURL = "localhost";
         public static void SendPacket<T>(IPEndPoint ip) where T : ServerOriginatingPacket
         {
             var obj = Activator.CreateInstance(typeof(T));
@@ -40,7 +43,7 @@ namespace Server
             byte[] res = new byte[] { typer }.Concat(data).ToArray();
             Instance.listener.Send(res, res.Length, ip);
         }
-        public Dictionary<IPEndPoint, ServerPlayer> connected = new Dictionary<IPEndPoint, ServerPlayer>();
+        public Dictionary<IPEndPoint, ServerPlayer> connected = new();
         public static Server Instance;
         public Server()
         {
@@ -65,9 +68,10 @@ namespace Server
                 Server.SendPacket<ReSyncPacket>(endpoint);
             }
         }
-        UdpClient listener = new UdpClient(port);
-        public async void Start()
+        UdpClient listener = new(port);
+        public async Task Start()
         {
+            PacketTypes.RegisterPacketTypes();
             Console.WriteLine("running startup");
             Console.WriteLine("Server started");
             try
@@ -75,7 +79,7 @@ namespace Server
                 await Task.Run(() => { SendReSyncPackets(); });
                 while (true)
                 {
-                    IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, port);
+                    IPEndPoint groupEP = new(IPAddress.Any, port);
                     Console.WriteLine("Waiting for broadcast");
                     byte[] bytes = listener.Receive(ref groupEP);
                     Console.WriteLine("Received broadcast from {0} :\n {1}\n", groupEP.ToString(), bytes.Length);
@@ -107,11 +111,12 @@ namespace Server
                     else
                     {
 
-                        ServerPlayer serverPlayer = new ServerPlayer(new PlayerEntity(), from);
+                        ServerPlayer serverPlayer = new(new PlayerEntity(), from);
+                        serverPlayer.player.collisionManager = collisionManager;
                         connected.Add(from, serverPlayer);
                         serverPlayer.id = connected.Count - 1;
                         clientpacket.ServerReceive(serverPlayer);
-                        ConnectRecive connect = new ConnectRecive();
+                        ConnectRecive connect = new();
                         connect.ID = (byte)serverPlayer.id;
                         Server.SendPacket(connect, from);
                     }

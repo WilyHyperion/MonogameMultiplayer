@@ -47,7 +47,7 @@ public abstract class Unit : SoildEntity
         team.Units.Add(u);
         return u;
     }
-    public static Dictionary<Type, StaticInformation> unitTypes = new Dictionary<Type, StaticInformation>();
+    public static Dictionary<Type, StaticInformation> unitTypes = new();
     public static void InitializeUnits(ContentManager content){
         StaticInformation.manager = content;
         int current = 0;

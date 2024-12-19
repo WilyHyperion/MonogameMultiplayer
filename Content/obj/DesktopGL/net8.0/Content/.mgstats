@@ -1,7 +1,7 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Entities/Projectiles/Bullet.png","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/Entities/Projectiles/Bullet.xnb","TextureProcessor","Texture2DContent",132,485,0.1096148
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Entities/Units/BasicChaser.png","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/Entities/Units/BasicChaser.xnb","TextureProcessor","Texture2DContent",514,9301,0.1074556
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/gun.png","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/gun.xnb","TextureProcessor","Texture2DContent",431,36949,0.1554604
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/Roboto.spritefont","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/Roboto.xnb","FontDescriptionProcessor","SpriteFontContent",2075,21538,0.1084055
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/UI/HPBar.png","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/UI/HPBar.xnb","TextureProcessor","Texture2DContent",314,96085,0.0068687
-"C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/unit.png","C:/Users/noahs/source/repos/C#/Game/UnamedGame/Content/bin/DesktopGL/Content/unit.xnb","TextureProcessor","Texture2DContent",363,9301,0.0024871
+"/home/noah/Projects/Game/UnamedGame/Content/Entities/Projectiles/Bullet.png","/home/noah/Projects/Game/UnamedGame/Content/bin/DesktopGL/Content/Entities/Projectiles/Bullet.xnb","TextureProcessor","Texture2DContent",132,485,0.1883858
+"/home/noah/Projects/Game/UnamedGame/Content/Entities/Units/BasicChaser.png","/home/noah/Projects/Game/UnamedGame/Content/bin/DesktopGL/Content/Entities/Units/BasicChaser.xnb","TextureProcessor","Texture2DContent",514,9301,0.0048779
+"/home/noah/Projects/Game/UnamedGame/Content/gun.png","/home/noah/Projects/Game/UnamedGame/Content/bin/DesktopGL/Content/gun.xnb","TextureProcessor","Texture2DContent",431,36949,0.0107745
+"/home/noah/Projects/Game/UnamedGame/Content/Roboto.spritefont","/home/noah/Projects/Game/UnamedGame/Content/bin/DesktopGL/Content/Roboto.xnb","FontDescriptionProcessor","SpriteFontContent",2015,21538,0.159686
+"/home/noah/Projects/Game/UnamedGame/Content/UI/HPBar.png","/home/noah/Projects/Game/UnamedGame/Content/bin/DesktopGL/Content/UI/HPBar.xnb","TextureProcessor","Texture2DContent",314,96085,0.0073903
+"/home/noah/Projects/Game/UnamedGame/Content/unit.png","/home/noah/Projects/Game/UnamedGame/Content/bin/DesktopGL/Content/unit.xnb","TextureProcessor","Texture2DContent",363,9301,0.0023056

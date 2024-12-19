@@ -51,28 +51,28 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     }
     public byte MyID;
     public int GameTick;
-    public CollisionManager collisionManager = new CollisionManager(1000, 1000);
-    public static Random random = new Random();
+    public CollisionManager collisionManager = new(1000, 1000);
+    public static Random random = new();
     public KeyboardState oldState;
-    public List<Entity> entities = new List<Entity>();
+    public List<Entity> entities = new();
     public List<Entity> GetEntities(){
-        List<Entity> other = new List<Entity>();
+        List<Entity> other = new();
         for(int i = 0; i < ConnectedPlayers.Count; i ++){
             other.Add(ConnectedPlayers.ElementAt(i).Value.player);
         }
         return [.. this.entities, .. other];
     }
     public PlayerEntity player;
-    public Dictionary<int, Player.GamePlayer> ConnectedPlayers = new Dictionary<int, Player.GamePlayer>();
+    public Dictionary<int, Player.GamePlayer> ConnectedPlayers = new();
     public Camera camera;
     public static UnamedGame Instance;
-    public Team playerTeam = new Team("Player");
-    public Team enemyTeam = new Team("Enemy");
+    public Team playerTeam = new("Player");
+    public Team enemyTeam = new("Enemy");
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     internal float updateTime;
     internal float drawTime;
-    Stopwatch stopwatch = new Stopwatch();
+    Stopwatch stopwatch = new();
     public ClientServer server;
 
     public UnamedGame()
@@ -103,7 +103,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         Projectile.InitializeUnits(Content);
         UIManager.loadElementTextures();
         font = Content.Load<SpriteFont>("Roboto");
-        UILogText uIText = new UILogText(font);
+        UILogText uIText = new(font);
         Helpers.Logger.LogText = uIText;
         UIManager.AddElement(uIText);
         UIManager.AddElement(new Preformance(font));

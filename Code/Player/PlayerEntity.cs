@@ -46,8 +46,9 @@ public class PlayerEntity : SoildEntity
     {
     }
 
-    public PlayerEntity(string name, RectangleF bounds, int maxHP)
+    public PlayerEntity(string name, CollisionManager g, RectangleF bounds, int maxHP)
     {
+        this.collisionManager = g;
         this.name = name;
         this.Bounds = bounds;
         this.maxHP = maxHP;

@@ -29,15 +29,15 @@ public static class Debug
         {
             for (int j = -gridamount    ; j < gridamount; j++)
             {
-                RectangleF r = new RectangleF(i * GridSystem.GridSize + position.X, j * GridSystem.GridSize + position.Y, GridSystem.GridSize, GridSystem.GridSize);
-                DrawHelpers.DrawRectangleOutline(s, r, Color.Red);
+                RectangleF r = new(i * GridSystem.GridSize + position.X, j * GridSystem.GridSize + position.Y, GridSystem.GridSize, GridSystem.GridSize);
+                DrawHelpers.DrawRectangleOutline(s, r.ToRectangle(), Color.Red);
             }
         }
     }
     public static void DrawDebugInformation(Entity e, SpriteBatch s)
     {
         SpriteFont f = Game.UnamedGame.font;
-        Dictionary<String, Object> draws = new Dictionary<String, object>()
+        Dictionary<String, Object> draws = new()
         {
             {"Active", e.Active.ToString()},
             {"ID", e.ID}

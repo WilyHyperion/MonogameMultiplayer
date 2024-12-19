@@ -23,7 +23,7 @@ namespace Game.Entities
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Helpers.DrawHelpers.DrawRectangle(spriteBatch, Bounds, Color);
+            Helpers.DrawHelpers.DrawRectangle(spriteBatch, Bounds.ToRectangle(), Color);
         }
     }
 }

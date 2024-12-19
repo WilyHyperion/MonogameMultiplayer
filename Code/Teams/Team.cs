@@ -9,11 +9,11 @@ using Game.Helpers;
 using Game.Abstract.Entities;
 
 public class Team {
-    public static Team Any = new Team("Any",  Color.Gray);
-    public List<Unit> Units = new List<Unit>();
+    public static Team Any = new("Any",  Color.Gray);
+    public List<Unit> Units = new();
     public int ID;
     public Color TeamColor;
-    public List<Team> Allied = new List<Team>();
+    public List<Team> Allied = new();
 
     public string name;
     public Team(String name){

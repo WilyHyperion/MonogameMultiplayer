@@ -12,7 +12,7 @@ public static class UIManager {
     public static void AddLow(UIElement e){
         Elements.Insert(0, e);
     }
-    public static List<UIElement> Elements = new List<UIElement>();
+    public static List<UIElement> Elements = new();
     public static void Draw(SpriteBatch s){
         foreach (UIElement e in Elements){
             if(e.Visible)

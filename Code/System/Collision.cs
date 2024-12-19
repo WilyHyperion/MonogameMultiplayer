@@ -46,11 +46,12 @@ public class CollisionManager
     /// <param name="Height"></param>
     public CollisionManager(int Width, int Height)
     {
+        Console.WriteLine("Creating Collision Manager");
         this.WorldCollision = new Tile[Width * 2, Height * 2];
     }
     public Tile GetTile(int worldX, int worldY)
     {
-        Point p = new Point(worldX / TileSize, worldY / TileSize);
+        Point p = new(worldX / TileSize, worldY / TileSize);
         if (p.X + (WorldCollision.GetLength(0) / 2) >= (WorldCollision.GetLength(0)))
         {
             return new Tile(1);
@@ -71,7 +72,7 @@ public class CollisionManager
     }
     public bool TilePosinWorld(int x, int y)
     {
-        Point p = new Point(x, y);
+        Point p = new(x, y);
         if (p.X + (WorldCollision.GetLength(0) / 2) >= (WorldCollision.GetLength(0)))
         {
             return false;
@@ -105,7 +106,7 @@ public class CollisionManager
     }
     public void SetTile(Tile t, int worldX, int worldY)
     {
-        Point p = new Point(worldX / TileSize, worldY / TileSize);
+        Point p = new(worldX / TileSize, worldY / TileSize);
         if (!TilePosinWorld(p.X, p.Y))
         {
             return;
@@ -116,8 +117,8 @@ public class CollisionManager
     /// Do not index directly without knowing what your doing -- me
     /// </summary>
     Tile[,] WorldCollision;
-    public List<Collidable> collidables = new List<Collidable>();
-    public GridSystem gridSystem = new GridSystem();
+    public List<Collidable> collidables = [];
+    public GridSystem gridSystem = new();
     public void addCollidable(Collidable collidable)
     {
         collidable.gridSystem = gridSystem;
@@ -148,7 +149,7 @@ public class CollisionManager
                 Tile tile = GetTile(x * TileSize, y * TileSize);
                 if (tile.Type != 0)
                 {
-                    RectangleF tileRect = new RectangleF(x * TileSize, y * TileSize, TileSize, TileSize);
+                    RectangleF tileRect = new(x * TileSize, y * TileSize, TileSize, TileSize);
                     if (newBounds.Intersects(tileRect))
                     {
                         Direction dx = Direction.Right;
@@ -218,7 +219,7 @@ public abstract class Collidable : Entity
     public bool ShouldCheckCollisions = true;
     public Node node;
     public GridSystem gridSystem;
-    protected RectangleF _bounds = new RectangleF();
+    protected RectangleF _bounds = new();
     public RectangleF OldBounds { get; set; }
     public RectangleF Bounds
     {
@@ -230,13 +231,17 @@ public abstract class Collidable : Entity
         {
             if (gridSystem == null)
             {
-                gridSystem = UnamedGame.Instance.collisionManager.gridSystem;
+                Console.WriteLine("grid system is null");
+                _bounds = value;
+                return;
             }
             _bounds = value;
             if (node == null)
             {
+                Console.WriteLine("creating node");
                 createNode();
             }
+            Console.WriteLine("removing node");
             gridSystem.RemoveNode(node);
             node = new Node(value, node.ID, this);
             gridSystem.AddNode(node);

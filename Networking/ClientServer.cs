@@ -22,8 +22,8 @@ public class ClientServer
         }
         packetsToRun.Clear();
     }
-    public static List<ServerOriginatingPacket> packetsToRun = new List<ServerOriginatingPacket>();
-    UdpClient client = new UdpClient();
+    public static List<ServerOriginatingPacket> packetsToRun = new();
+    UdpClient client = new();
     public ClientServer()
     {
         client.Connect(Server.Server.ServerURL, Server.Server.port);

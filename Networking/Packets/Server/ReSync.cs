@@ -26,17 +26,17 @@ namespace Server.Packets.ServerSided
 
         public override void ClientReceive()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (MemoryStream ms = new())
             {
                 ms.Write(data);
 
-                using (BinaryReader b = new BinaryReader(ms))
+                using (BinaryReader b = new(ms))
                 {
                     b.BaseStream.Seek(0, SeekOrigin.Begin);
                     int amount = b.ReadInt32();
                     for (int i = 0; i < amount; i++)
                     {
-                         PlayerEntity p = b.ReadPlayer();
+                         PlayerEntity p = b.ReadPlayer(UnamedGame.Instance?.collisionManager);
                          if(p.ID == UnamedGame.Instance.MyID){
                             Console.WriteLine("self player, checking desync");
                          }
