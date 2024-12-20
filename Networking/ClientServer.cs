@@ -30,17 +30,22 @@ public class ClientServer
     }
     public async void ListenForPackets()
     {
+        Console.WriteLine($"listening on {client.Client.LocalEndPoint}, connecting to {Server.Server.ServerURL}  : {Server.Server.port}");
         while (true)
         {
             try
             {
-                Console.WriteLine($"listening on {client.Client.LocalEndPoint}, connecting to {Server.Server.ServerURL}  : {Server.Server.port}");
                 UdpReceiveResult result = await client.ReceiveAsync();
                 byte[] data = result.Buffer;
                 if (PacketTypes.PacketTypeReverse.TryGetValue(data[0], out Type p))
                 {
+                    Console.WriteLine("Packet Recived  " + p);
                     ServerOriginatingPacket packet = (ServerOriginatingPacket)Activator.CreateInstance(p, [data.Skip(1).ToArray()]);
+                    Console.WriteLine("Packet Recived");
                     packetsToRun.Add(packet);
+                }
+                else {
+                    Console.WriteLine("unkown packet with type " + data[0]);
                 }
             }
             catch (SocketException ex)

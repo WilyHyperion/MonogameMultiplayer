@@ -74,8 +74,8 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     internal float drawTime;
     Stopwatch stopwatch = new();
     public ClientServer server;
-
-    public UnamedGame()
+    public static bool isServer;
+    public UnamedGame(bool Server)
     {
         _graphics = new GraphicsDeviceManager(this);
         _graphics.IsFullScreen = true;
@@ -85,6 +85,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         Instance = this;
         server = new ClientServer();
         server.init();
+        isServer = Server;
     }
     protected override void Initialize()
     {

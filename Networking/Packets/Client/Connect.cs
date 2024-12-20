@@ -26,6 +26,7 @@ public class ConnectRecive : ServerOriginatingPacket
 
     public override void ClientReceive()
     {
+        Console.WriteLine("Received Connect reponse");
         UnamedGame.Instance.MyID = data[0];
         UnamedGame.Instance.ConnectedPlayers.Clear();
         UnamedGame.Instance.ConnectedPlayers[data[0]] = new GamePlayer(data[0], UnamedGame.Instance.player, true);
