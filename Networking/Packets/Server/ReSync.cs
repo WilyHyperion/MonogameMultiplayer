@@ -36,13 +36,24 @@ namespace Server.Packets.ServerSided
                     int amount = b.ReadInt32();
                     for (int i = 0; i < amount; i++)
                     {
-                         PlayerEntity p = b.ReadPlayer(UnamedGame.Instance?.collisionManager);
-                         if(p.ID == UnamedGame.Instance.MyID){
+                        Console.WriteLine($"  bytes left at {i}   {b.BaseStream.Length - b.BaseStream.Position} ");
+                        var id = b.ReadInt32();
+                         if(id == UnamedGame.Instance.MyID){
                             Console.WriteLine("self player, checking desync");
+                            b.ReadRectangleF();
+                            b.ReadVector2();
                          }
                          else {
                             Console.WriteLine("Resyncing remote player");
-                            UnamedGame.Instance.ReSyncPlayer(p);
+                            var rect  = b.ReadRectangleF();
+                            var vel = b.ReadVector2();
+                            if(UnamedGame.Instance.ConnectedPlayers.TryGetValue(id, out GamePlayer p)){
+                                p.player.Bounds = rect;
+                                p.player.Velocity = vel;
+                            }
+                            else {
+                                UnamedGame.Instance.ConnectedPlayers.Add(id, new GamePlayer(id, new PlayerEntity(rect.Position), false));
+                            }
                          }
                     }
                 }
@@ -59,7 +70,10 @@ namespace Server.Packets.ServerSided
                     writer.Write((int)s.connected.Count);
                     for (int i = 0; i < s.connected.Count; i++)
                     {
-                        writer.Write(s.connected.Values.ElementAt(i).player);
+                        ServerPlayer player = s.connected.ElementAt(i).Value;
+                        writer.Write(player.id);
+                        writer.Write(player.player.Bounds);
+                        writer.Write(player.player.Velocity);
                     }
                 }
                 return ms.ToArray();

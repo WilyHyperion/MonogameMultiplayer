@@ -30,19 +30,19 @@ public static class BinaryHelpers {
         return r;
     }
     public static void Write(this BinaryWriter bw, PlayerEntity p){
+        Console.WriteLine( $"{p.name} write player");
         bw.Write(p.name);
         bw.Write(p.Bounds);
         bw.Write(p.maxHP);
         bw.Write(p.ID);
         BinaryHelpers.Write(bw, p.Velocity);
     }
-    public static PlayerEntity ReadPlayer(this BinaryReader b, CollisionManager cm){ {
+    public static PlayerEntity ReadPlayer(this BinaryReader b, CollisionManager cm){
         string name = b.ReadString();
         RectangleF bounds = b.ReadRectangleF();
         int maxHP = b.ReadInt32();
         PlayerEntity p = new(name, cm,bounds, maxHP);
         p.ID = b.ReadInt32();
         return p;
-    }
 }
 }

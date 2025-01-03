@@ -83,7 +83,6 @@ public class ClientServer
         {
             byte[] data = [v];
             data = data.Concat(packet.Send()).ToArray();
-            Console.WriteLine("sending data" + data.Length);
             client.Send(data);
         }
         else

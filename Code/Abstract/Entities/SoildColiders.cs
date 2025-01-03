@@ -16,6 +16,10 @@ public abstract class SoildEntity : Collidable
 
     public override void OnCollision(Collidable other)
     {
+        if (other.node == null || this.node == null) {
+            Console.WriteLine("nodeless collidable");
+            return;
+        }
         if (other.node.ID == this.node.ID){
             return;
         }

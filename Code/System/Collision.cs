@@ -241,7 +241,6 @@ public abstract class Collidable : Entity
                 Console.WriteLine("creating node");
                 createNode();
             }
-            Console.WriteLine("removing node");
             gridSystem.RemoveNode(node);
             node = new Node(value, node.ID, this);
             gridSystem.AddNode(node);

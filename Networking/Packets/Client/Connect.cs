@@ -34,7 +34,6 @@ public class ConnectRecive : ServerOriginatingPacket
     public byte ID;
     public override byte[] Send()
     {
-        Console.WriteLine("Sending connect packet");
         return [ID];
     }
 }
@@ -80,6 +79,7 @@ public class Connect : ClientOrigniatingPacket
                 Bounds = bounds,
                 name = b.ReadString()
             };
+            Console.WriteLine(p.name);
             sender.player = p;
             p.ID = Server.Instance.connected.Count -1;
             b.Dispose();

@@ -159,9 +159,7 @@ public class RectangleF {
     public static RectangleF operator -(RectangleF r, Vector2 v){
         return new RectangleF(r.x - v.X, r.y - v.Y, r.Width, r.Height);
     }
-    public static implicit operator RectangleF(Rectangle r){
-        return new RectangleF(r.X, r.Y, r.Width, r.Height);
-    }
+
     
     public override string ToString()
     {

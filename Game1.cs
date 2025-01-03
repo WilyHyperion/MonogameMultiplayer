@@ -46,6 +46,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         {
             Console.WriteLine("new player join");
             ConnectedPlayers.Add(p.ID, new GamePlayer(p.ID, p, false));
+            p.collisionManager.addCollidable(p);
         }
 
     }
@@ -55,9 +56,11 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     public static Random random = new();
     public KeyboardState oldState;
     public List<Entity> entities = new();
-    public List<Entity> GetEntities(){
+    public List<Entity> GetEntities()
+    {
         List<Entity> other = new();
-        for(int i = 0; i < ConnectedPlayers.Count; i ++){
+        for (int i = 0; i < ConnectedPlayers.Count; i++)
+        {
             other.Add(ConnectedPlayers.ElementAt(i).Value.player);
         }
         return [.. this.entities, .. other];
@@ -75,17 +78,20 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
     Stopwatch stopwatch = new();
     public ClientServer server;
     public static bool isServer;
-    public UnamedGame(bool Server)
+    public UnamedGame(bool se = false)
     {
+        isServer = se;
         _graphics = new GraphicsDeviceManager(this);
-        _graphics.IsFullScreen = true;
+
         _graphics.HardwareModeSwitch = false;
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
         Instance = this;
-        server = new ClientServer();
-        server.init();
-        isServer = Server;
+        if (!se)
+        {
+            server = new ClientServer();
+            server.init();
+        }
     }
     protected override void Initialize()
     {
@@ -93,7 +99,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         this.IsFixedTimeStep = true;
         camera = new Camera(new Vector2(0, 0), GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
         base.Initialize();
-        player = new PlayerEntity( Vector2.Zero);
+        player = new PlayerEntity(Vector2.Zero);
         server.Send(new Connect());
     }
     public static SpriteFont font;
@@ -164,7 +170,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
                 }
                 c.PostUpdate();
             }
-            
+
         }
         UIManager.UpdateElements();
         oldState = Keyboard.GetState();
@@ -193,7 +199,7 @@ public class UnamedGame : Microsoft.Xna.Framework.Game
         }
         _spriteBatch.End();
         _spriteBatch.Begin(transformMatrix: camera.TransformMatrix);
-        
+
         List<Entity> all = GetEntities();
         foreach (Entity entity in all)
         {

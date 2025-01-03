@@ -27,7 +27,6 @@ public class PlayerMove : ClientOrigniatingPacket
         using var ms = new MemoryStream();
         using (var writer = new BinaryWriter(ms))
         {
-            Console.WriteLine("Sending player move packet" + Game.UnamedGame.Instance.player.Bounds);
             writer.Write(Game.UnamedGame.Instance.player.Velocity);
             writer.Write(UnamedGame.Instance.player.Bounds);
         }
@@ -39,7 +38,6 @@ public class PlayerMove : ClientOrigniatingPacket
         using BinaryReader b = new(ms);
         Vector2 vel = b.ReadVector2();
         RectangleF bounds = b.ReadRectangleF();
-        Console.WriteLine("setting");
         sender.player.Bounds = bounds;
         sender.player.Velocity = vel;
     }

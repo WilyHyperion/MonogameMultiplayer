@@ -15,6 +15,7 @@ public class GamePlayer {
         this.player = player;
         this.player.remote = !local;
         this.Local = local;
+        
     }
     public void Update(){
         player.Update();

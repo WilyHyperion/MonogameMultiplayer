@@ -19,7 +19,7 @@ namespace Server
 {
     public class Server
     {
-        public UnamedGame game = new();
+        public UnamedGame game = new(true);
         public List<Entity> entities = new();
         public CollisionManager collisionManager = new(5000, 5000);
         public const string ServerURL = "localhost";
@@ -80,9 +80,7 @@ namespace Server
                 while (true)
                 {
                     IPEndPoint groupEP = new(IPAddress.Any, port);
-                    Console.WriteLine("Waiting for broadcast");
                     byte[] bytes = listener.Receive(ref groupEP);
-                    Console.WriteLine("Received broadcast from {0} :\n {1}\n", groupEP.ToString(), bytes.Length);
                     await Task.Run(() => { HandlePacket(bytes, groupEP); });
                 }
             }
@@ -144,7 +142,6 @@ namespace Server
         public ServerPlayer(PlayerEntity p, IPEndPoint from)
         {
             this.player = p;
-            
             this.IP = from;
         }
     }
