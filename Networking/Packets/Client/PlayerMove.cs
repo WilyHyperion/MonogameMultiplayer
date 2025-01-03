@@ -40,5 +40,6 @@ public class PlayerMove : ClientOrigniatingPacket
         RectangleF bounds = b.ReadRectangleF();
         sender.player.Bounds = bounds;
         sender.player.Velocity = vel;
+        Server.Server.TriggerMovementSync(sender.id, sender.player.Bounds, sender.player.Velocity);
     }
 }

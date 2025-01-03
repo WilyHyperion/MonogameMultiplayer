@@ -9,8 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Game;
 using Game.Abstract;
+using Game.Helpers;
 using Game.Player;
 using Game.System.Collision;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Server.Packets;
 using Server.Packets.ServerSided;
@@ -123,6 +125,14 @@ namespace Server
             else
             {
                 Console.WriteLine("No Type Found for " + type);
+            }
+        }
+
+        public static void TriggerMovementSync(int id, RectangleF bounds, Vector2 velocity)
+        {
+            for(int i = 0; i < Instance.connected.Count; i++) {
+                var p = Instance.connected.Values.ElementAt(i);
+                Server.SendPacket(new SyncPlayerMove(id, bounds, velocity), p.IP);
             }
         }
     }
