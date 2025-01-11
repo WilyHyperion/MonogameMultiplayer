@@ -67,7 +67,7 @@ namespace Server
             for (int i = 0; i < connected.Keys.Count; i++)
             {
                 var endpoint = connected.Keys.ElementAt(i);
-                Server.SendPacket<ReSyncPacket>(endpoint);
+                Server. SendPacket<ReSyncPacket>(endpoint);
             }
         }
         UdpClient listener = new(port);

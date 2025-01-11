@@ -27,6 +27,7 @@ public class PlayerMove : ClientOrigniatingPacket
         using var ms = new MemoryStream();
         using (var writer = new BinaryWriter(ms))
         {
+            Console.WriteLine(UnamedGame.Instance.player.Bounds);
             writer.Write(Game.UnamedGame.Instance.player.Velocity);
             writer.Write(UnamedGame.Instance.player.Bounds);
         }
