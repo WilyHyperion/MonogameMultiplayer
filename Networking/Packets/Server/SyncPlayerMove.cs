@@ -50,6 +50,9 @@ namespace Server.Packets.ServerSided
                         p.player.Bounds = b.ReadRectangleF();
                         p.player.Velocity = b.ReadVector2();
                     }
+                    else {
+                        Console.WriteLine("failed to find player");
+                    }
                 }
             }
         }
